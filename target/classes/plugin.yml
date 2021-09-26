@@ -1,0 +1,4 @@
+name: HybridCore
+main: net.hybrid.core.CorePlugin
+version: 0.0.1
+authors: ["LiamHBest", "Hybrid Development"]
