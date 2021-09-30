@@ -1,6 +1,15 @@
 package net.hybrid.core;
 
-import net.hybrid.core.mongo.Mongo;
+import net.hybrid.core.commands.ItemCommand;
+import net.hybrid.core.commands.gmcommands.GmaCommand;
+import net.hybrid.core.commands.gmcommands.GmcCommand;
+import net.hybrid.core.commands.gmcommands.GmsCommand;
+import net.hybrid.core.commands.gmcommands.GmspCommand;
+import net.hybrid.core.data.Language;
+import net.hybrid.core.data.Mongo;
+import net.hybrid.core.data.MongoListener;
+import net.hybrid.core.rank.RankCommand;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CorePlugin extends JavaPlugin {
@@ -15,11 +24,29 @@ public class CorePlugin extends JavaPlugin {
         INSTANCE = this;
         mongo = new Mongo(this);
 
+        new RankCommand();
+        new ItemCommand();
+
+        new GmaCommand();
+        new GmcCommand();
+        new GmsCommand();
+        new GmspCommand();
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new MongoListener(), this);
+
+        Language.initLanguageManager();
+
         getLogger().info("Hybrid Core system has been SUCCESSFULLY loaded in " + (System.currentTimeMillis() - time) + "ms!");
     }
 
     @Override
     public void onDisable(){
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
+
         INSTANCE = null;
         getLogger().info("Hybrid Core system has SUCCESSFULLY been disabled.");
     }
@@ -31,5 +58,4 @@ public class CorePlugin extends JavaPlugin {
     public Mongo getMongo() {
         return mongo;
     }
-
 }

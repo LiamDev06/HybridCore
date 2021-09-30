@@ -1,16 +1,17 @@
-package net.hybrid.core.managers;
+package net.hybrid.core.rank;
 
 import net.hybrid.core.CorePlugin;
-import net.hybrid.core.mongo.Mongo;
+import net.hybrid.core.data.Mongo;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
+import org.bukkit.ChatColor;
 
 import java.util.UUID;
 
 public class RankManager {
 
     private final UUID uuid;
-    private Mongo mongo = CorePlugin.getInstance().getMongo();
+    private final Mongo mongo = CorePlugin.getInstance().getMongo();
 
     public RankManager(UUID uuid) {
         this.uuid = uuid;
@@ -21,16 +22,24 @@ public class RankManager {
 
         if (playerRank.isStaffRank()) {
             document.replace("staffRank", playerRank.name());
+            document.replace("staffNotifyMode", true);
 
         } else if (playerRank == PlayerRank.YOUTUBER || playerRank == PlayerRank.TWITCH_STREAMER || playerRank == PlayerRank.PARTNER) {
             document.replace("specialRank", playerRank.name());
             document.replace("staffRank", "");
+            document.replace("staffNotifyMode", false);
+            document.replace("staffBuildMode", false);
 
         } else {
             document.replace("playerRank", playerRank.name());
             document.replace("specialRank", "");
             document.replace("staffRank", "");
+            document.replace("staffNotifyMode", false);
+            document.replace("staffBuildMode", false);
         }
+
+        document.replace("adminDebugMode", false);
+        document.replace("chatColor", ChatColor.WHITE.name());
 
         mongo.saveDocument("playerData", document, uuid);
     }
@@ -38,10 +47,10 @@ public class RankManager {
     public PlayerRank getRank() {
         Document document = mongo.loadDocument("playerData", uuid);
 
-        if (document.getString("staffRank").equalsIgnoreCase("")) {
+        if (!document.getString("staffRank").equalsIgnoreCase("")) {
             return PlayerRank.valueOf(document.getString("staffRank").toUpperCase());
 
-        } else if (document.getString("specialRank").equalsIgnoreCase("")) {
+        } else if (!document.getString("specialRank").equalsIgnoreCase("")) {
             return PlayerRank.valueOf(document.getString("specialRank").toUpperCase());
 
         } else {
@@ -50,7 +59,6 @@ public class RankManager {
     }
 
     public boolean hasRank(PlayerRank playerRank) {
-        Document document = mongo.loadDocument("playerData", uuid);
         return (getRank().getOrdering() >= playerRank.getOrdering());
     }
 
