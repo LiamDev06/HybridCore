@@ -22,6 +22,7 @@ net\hybrid\core\utility\AnvilGUI$AnvilContainer.class
 net\hybrid\core\utility\SoundManager.class
 net\hybrid\core\utility\AnvilGUI$1.class
 net\hybrid\core\utility\AnvilGUI$AnvilClickEvent.class
+net\hybrid\core\managers\CommandListener.class
 net\hybrid\core\commands\ItemCommand.class
 net\hybrid\core\utility\ServerCommand.class
 net\hybrid\core\data\MongoListener.class

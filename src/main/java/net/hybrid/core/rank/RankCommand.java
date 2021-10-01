@@ -23,7 +23,7 @@ public class RankCommand extends ServerCommand {
                 && !player.getUniqueId().toString().equals("96fb68a4-601b-41cb-99c0-c8a575abb98e")
                 && !player.getUniqueId().toString().equals("6dc247f1-1492-4d93-95dc-08fc40ebb94a")) {
 
-            player.sendMessage(Language.get(player.getUniqueId(), "no_permission"));
+            hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "no_permission"));
             return;
         }
 

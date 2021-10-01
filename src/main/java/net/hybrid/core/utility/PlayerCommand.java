@@ -35,9 +35,9 @@ public abstract class PlayerCommand extends Command {
     public abstract void onPlayerCommand(Player player, String[] args);
 
     @Override
-    public boolean execute(CommandSender commandSender, String s, String[] strings) {
+    public boolean execute(CommandSender commandSender, String s, String[] args) {
         if (commandSender instanceof Player) {
-            this.onPlayerCommand((Player) commandSender, strings);
+            this.onPlayerCommand((Player) commandSender, args);
         }
         return false;
     }
