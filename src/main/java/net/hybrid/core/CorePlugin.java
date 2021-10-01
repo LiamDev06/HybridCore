@@ -1,6 +1,6 @@
 package net.hybrid.core;
 
-import net.hybrid.core.commands.ItemCommand;
+import net.hybrid.core.commands.*;
 import net.hybrid.core.commands.gmcommands.GmaCommand;
 import net.hybrid.core.commands.gmcommands.GmcCommand;
 import net.hybrid.core.commands.gmcommands.GmsCommand;
@@ -27,6 +27,10 @@ public class CorePlugin extends JavaPlugin {
 
         new RankCommand();
         new ItemCommand();
+        new SetChatColorCommand();
+        new StaffNotifyCommand();
+        new StaffHubCommand();
+        new BuildModeCommand();
 
         new GmaCommand();
         new GmcCommand();

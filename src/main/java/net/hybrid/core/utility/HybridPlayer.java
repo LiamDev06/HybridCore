@@ -17,15 +17,22 @@ import java.util.UUID;
 public class HybridPlayer {
 
     private final UUID uuid;
+
     private final RankManager rankManager;
+    private final MetadataManager metadataManager;
 
     public HybridPlayer(UUID uuid) {
         this.uuid = uuid;
         this.rankManager = new RankManager(uuid);
+        this.metadataManager = new MetadataManager(uuid);
     }
 
     public RankManager getRankManager() {
         return rankManager;
+    }
+
+    public MetadataManager getMetadataManager() {
+        return metadataManager;
     }
 
     public void sendMessage(String message) {

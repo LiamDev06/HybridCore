@@ -2,8 +2,10 @@ package net.hybrid.core.data;
 
 import com.mongodb.client.model.Filters;
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.*;
 import org.bson.Document;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,11 +18,25 @@ public class MongoListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
         Mongo mongo = CorePlugin.getInstance().getMongo();
-        Document document = mongo.getCoreDatabase().getCollection("playerData")
-                .find(Filters.eq("playerUuid",
-                        player.getUniqueId().toString())).first();
+        Document document;
 
-        if (document == null) {
+        Document playerListDocument = mongo.getCoreDatabase()
+                .getCollection("serverData").find(
+                        Filters.eq("serverDataType", "playerDataList")).first();
+
+        if (playerListDocument == null) {
+            playerListDocument = new Document().append("serverDataType", "playerDataList");
+        }
+
+        if (!playerListDocument.containsKey(player.getUniqueId().toString())) {
+            playerListDocument.append(player.getUniqueId().toString(), player.getName());
+        } else {
+            if (!playerListDocument.getString(player.getUniqueId().toString()).equalsIgnoreCase(player.getName())) {
+                playerListDocument.replace(player.getUniqueId().toString(), player.getName());
+            }
+        }
+
+        if (!new HybridPlayer(player.getUniqueId()).hasJoinedServerBefore()) {
             document = new Document();
 
             document.append("playerName", player.getName());
@@ -37,6 +53,7 @@ public class MongoListener implements Listener {
             document.append("networkLevelExp", 0);
             document.append("totalNetworkExp", 0);
             document.append("chatChannel", ChatChannel.ALL.name());
+            document.append("chatColor", ChatColor.WHITE.name());
             document.append("userLanguage", LanguageType.ENGLISH.name());
             document.append("messageLastReplyUuid", "");
             document.append("banned", false);
@@ -59,23 +76,11 @@ public class MongoListener implements Listener {
             document.append("staffAdminDebug", false);
 
         } else {
-            document.append("playerName", player.getName());
-        }
+            document = mongo.getCoreDatabase().getCollection("playerData")
+                    .find(Filters.eq("playerUuid",
+                            player.getUniqueId().toString())).first();
 
-        Document playerListDocument = mongo.getCoreDatabase()
-                .getCollection("serverData").find(
-                        Filters.eq("serverDataType", "playerDataList")).first();
-
-        if (playerListDocument == null) {
-            playerListDocument = new Document().append("serverDataType", "playerDataList");
-        }
-
-        if (!playerListDocument.containsKey(player.getUniqueId().toString())) {
-            playerListDocument.append(player.getUniqueId().toString(), player.getName());
-        } else {
-            if (!playerListDocument.getString(player.getUniqueId().toString()).equalsIgnoreCase(player.getName())) {
-                playerListDocument.replace(player.getUniqueId().toString(), player.getName());
-            }
+            document.replace("playerName", player.getName());
         }
 
         mongo.saveDocument("serverData", playerListDocument, "serverDataType", "playerDataList");
