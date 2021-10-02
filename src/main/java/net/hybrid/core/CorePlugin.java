@@ -26,6 +26,11 @@ public class CorePlugin extends JavaPlugin {
         INSTANCE = this;
         mongo = new Mongo(this);
 
+        new AllChatCommand();
+        new StaffChatCommand();
+        new AdminChatCommand();
+        new OwnerChatCommand();
+
         new RankCommand();
         new ItemCommand();
         new SetChatColorCommand();

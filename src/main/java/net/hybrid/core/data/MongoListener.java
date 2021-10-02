@@ -36,7 +36,8 @@ public class MongoListener implements Listener {
             }
         }
 
-        if (!new HybridPlayer(player.getUniqueId()).hasJoinedServerBefore()) {
+        HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
+        if (!hybridPlayer.hasJoinedServerBefore()) {
             document = new Document();
 
             document.append("playerName", player.getName());
@@ -80,6 +81,18 @@ public class MongoListener implements Listener {
                     .find(Filters.eq("playerUuid",
                             player.getUniqueId().toString())).first();
 
+            if (hybridPlayer.getRankManager().isStaff()) {
+                CorePlugin.getInstance().getMongo().getStaff().add(player.getUniqueId());
+            }
+
+            if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN)) {
+                CorePlugin.getInstance().getMongo().getAdmins().add(player.getUniqueId());
+            }
+
+            if (hybridPlayer.getRankManager().hasRank(PlayerRank.OWNER)) {
+                CorePlugin.getInstance().getMongo().getOwners().add(player.getUniqueId());
+            }
+
             document.replace("playerName", player.getName());
         }
 
@@ -94,6 +107,10 @@ public class MongoListener implements Listener {
         Document document = mongo.loadDocument("playerData", player.getUniqueId());
 
         document.append("lastLogout", System.currentTimeMillis());
+
+        CorePlugin.getInstance().getMongo().getStaff().remove(player.getUniqueId());
+        CorePlugin.getInstance().getMongo().getAdmins().remove(player.getUniqueId());
+        CorePlugin.getInstance().getMongo().getOwners().remove(player.getUniqueId());
 
         mongo.saveDocument("playerData", document, player.getUniqueId());
     }

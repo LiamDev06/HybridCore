@@ -3,6 +3,7 @@ net\hybrid\core\data\Mongo.class
 net\hybrid\core\data\Language.class
 net\hybrid\core\commands\gmcommands\GmsCommand.class
 net\hybrid\core\utility\enums\FriendsPrivacy.class
+net\hybrid\core\commands\AdminChatCommand.class
 net\hybrid\core\commands\gmcommands\GmspCommand.class
 net\hybrid\core\utility\enums\LanguageType.class
 net\hybrid\core\utility\enums\PartyPrivacy.class
@@ -21,6 +22,7 @@ net\hybrid\core\commands\SetChatColorCommand.class
 net\hybrid\core\rank\RankCommand.class
 net\hybrid\core\CorePlugin.class
 net\hybrid\core\commands\ChatChannelCommand.class
+net\hybrid\core\commands\OwnerChatCommand.class
 net\hybrid\core\managers\ChatManager.class
 net\hybrid\core\utility\AnvilGUI$AnvilClickEventHandler.class
 net\hybrid\core\utility\AnvilGUI$AnvilContainer.class
@@ -36,5 +38,7 @@ net\hybrid\core\commands\gmcommands\GmaCommand.class
 net\hybrid\core\commands\StaffNotifyCommand.class
 net\hybrid\core\utility\HybridPlayer.class
 net\hybrid\core\utility\PlayerCommand.class
+net\hybrid\core\commands\StaffChatCommand.class
 net\hybrid\core\utility\ItemBuilder.class
+net\hybrid\core\commands\AllChatCommand.class
 net\hybrid\core\utility\CC.class

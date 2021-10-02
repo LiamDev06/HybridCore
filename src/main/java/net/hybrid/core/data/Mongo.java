@@ -8,17 +8,25 @@ import com.mongodb.client.model.UpdateOptions;
 import net.hybrid.core.CorePlugin;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Mongo {
 
     private final MongoDatabase coreDatabase;
+    private final ArrayList<UUID> owners;
+    private final ArrayList<UUID> admins;
+    private final ArrayList<UUID> staff;
 
     public Mongo(CorePlugin plugin) {
         String connectionString = "mongodb+srv://HybridNetwork:jdfsdsf879hjgfdg5@cluster0.0bfk6.mongodb.net/test?retryWrites=true&w=majority";
         MongoClient mongoClient = new MongoClient(new MongoClientURI(connectionString));
 
         this.coreDatabase = mongoClient.getDatabase("coredata");
+
+        this.owners = new ArrayList<>();
+        this.admins = new ArrayList<>();
+        this.staff = new ArrayList<>();
 
         plugin.getLogger().info("The core database has been CONNECTED.");
     }
@@ -38,9 +46,8 @@ public class Mongo {
     }
 
     public Document loadDocument(String collectionName, String find, Object value) {
-        Document document = coreDatabase.getCollection(collectionName)
+        return coreDatabase.getCollection(collectionName)
                 .find(Filters.eq(find, value)).first();
-        return document;
     }
 
     public void saveDocument(String collectionName, Document document, UUID uuid) {
@@ -59,6 +66,17 @@ public class Mongo {
         return coreDatabase;
     }
 
+    public ArrayList<UUID> getOwners() {
+        return owners;
+    }
+
+    public ArrayList<UUID> getAdmins() {
+        return admins;
+    }
+
+    public ArrayList<UUID> getStaff() {
+        return staff;
+    }
 }
 
 

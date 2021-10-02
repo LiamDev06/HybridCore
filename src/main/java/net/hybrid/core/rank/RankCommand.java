@@ -73,8 +73,8 @@ public class RankCommand extends ServerCommand {
 
                     targetPlayer.getRankManager().setRank(setRank);
 
-                    hybridPlayer.sendMessage("&aYou set " + targetPlayer.getName() + "'s rank to " + setRank.getDisplayName().toUpperCase());
-                    targetPlayer.sendBungeeMessage("&aYou are now " + setRank.getDisplayName().toUpperCase());
+                    hybridPlayer.sendMessage("&aYou set " + targetPlayer.getName() + "'s rank to " + setRank.name().replace("_", " ").toUpperCase());
+                    targetPlayer.sendBungeeMessage("&aYou are now " + setRank.name().replace("_", " ").toUpperCase());
 
                 } else {
                     hybridPlayer.sendMessage("&cYou need to specify a player first! Use /rank <rank> <player>");

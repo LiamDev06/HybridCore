@@ -95,6 +95,10 @@ public class HybridPlayer {
         return Bukkit.getOfflinePlayer(uuid).getName();
     }
 
+    public String getColoredName() {
+        return rankManager.getRank().getColor() + getName();
+    }
+
     public boolean hasJoinedServerBefore() {
         Document document = CorePlugin.getInstance().getMongo().loadDocument(
                 "serverData", "serverDataType", "playerDataList"

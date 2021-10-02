@@ -23,8 +23,35 @@ public class ChatChannelCommand extends PlayerCommand {
             return;
         }
 
+        ChatChannel channel = ChatChannel.ALL;
+        boolean shouldContinue = true;
+
         try {
-            ChatChannel channel = ChatChannel.valueOf(args[0].toUpperCase());
+            channel = ChatChannel.valueOf(args[0].toUpperCase());
+
+        } catch (Exception ignored) {
+
+            for (ChatChannel target : ChatChannel.values()) {
+                if (!shouldContinue) break;
+
+                for (String s : target.getAliases()) {
+                    if (args[0].equalsIgnoreCase(s)) {
+                        shouldContinue = false;
+                        channel = target;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldContinue) {
+                hybridPlayer.sendMessage("&cInvalid chat channel!");
+                hybridPlayer.sendMessage("&cAvailable channels: " + getChannels(hybridPlayer));
+                return;
+            }
+        }
+
+
+        try {
             if (!hybridPlayer.getRankManager().hasRank(channel.getRequiredRank())) {
                 hybridPlayer.sendMessage("&cInvalid chat channel!");
                 hybridPlayer.sendMessage("&cAvailable channels: " + getChannels(hybridPlayer));

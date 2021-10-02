@@ -25,11 +25,26 @@ public class RankManager {
             document.replace("staffRank", playerRank.name());
             document.replace("staffNotifyMode", true);
 
+            if (!CorePlugin.getInstance().getMongo().getStaff().contains(uuid)) {
+                CorePlugin.getInstance().getMongo().getStaff().add(uuid);
+            }
+
         } else if (playerRank == PlayerRank.YOUTUBER || playerRank == PlayerRank.TWITCH_STREAMER || playerRank == PlayerRank.PARTNER) {
             document.replace("specialRank", playerRank.name());
             document.replace("staffRank", "");
             document.replace("staffNotifyMode", false);
             document.replace("staffBuildMode", false);
+
+            if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
+                    document.getString("chatChannel").equalsIgnoreCase("builder") ||
+                    document.getString("chatChannel").equalsIgnoreCase("admin") ||
+                    document.getString("chatChannel").equalsIgnoreCase("owner")) {
+                document.replace("chatChannel", "ALL");
+            }
+
+            CorePlugin.getInstance().getMongo().getStaff().remove(uuid);
+            CorePlugin.getInstance().getMongo().getAdmins().remove(uuid);
+            CorePlugin.getInstance().getMongo().getOwners().remove(uuid);
 
         } else {
             document.replace("playerRank", playerRank.name());
@@ -37,17 +52,29 @@ public class RankManager {
             document.replace("staffRank", "");
             document.replace("staffNotifyMode", false);
             document.replace("staffBuildMode", false);
+
+            if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
+                    document.getString("chatChannel").equalsIgnoreCase("builder") ||
+                    document.getString("chatChannel").equalsIgnoreCase("admin") ||
+                    document.getString("chatChannel").equalsIgnoreCase("owner")) {
+                document.replace("chatChannel", "ALL");
+            }
+
+            CorePlugin.getInstance().getMongo().getStaff().remove(uuid);
+            CorePlugin.getInstance().getMongo().getAdmins().remove(uuid);
+            CorePlugin.getInstance().getMongo().getOwners().remove(uuid);
+        }
+
+        if (playerRank == PlayerRank.ADMIN) {
+            CorePlugin.getInstance().getMongo().getAdmins().add(uuid);
+        }
+
+        if (playerRank == PlayerRank.OWNER) {
+            CorePlugin.getInstance().getMongo().getOwners().add(uuid);
         }
 
         document.replace("adminDebugMode", false);
         document.replace("chatColor", ChatColor.WHITE.name());
-
-        if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
-                document.getString("chatChannel").equalsIgnoreCase("builder") ||
-                document.getString("chatChannel").equalsIgnoreCase("admin") ||
-                document.getString("chatChannel").equalsIgnoreCase("owner")) {
-            document.replace("chatChannel", "ALL");
-        }
 
         mongo.saveDocument("playerData", document, uuid);
     }
