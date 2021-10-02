@@ -8,6 +8,7 @@ import net.hybrid.core.commands.gmcommands.GmspCommand;
 import net.hybrid.core.data.Language;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.data.MongoListener;
+import net.hybrid.core.managers.ChatManager;
 import net.hybrid.core.managers.CommandListener;
 import net.hybrid.core.rank.RankCommand;
 import org.bukkit.plugin.PluginManager;
@@ -31,6 +32,7 @@ public class CorePlugin extends JavaPlugin {
         new StaffNotifyCommand();
         new StaffHubCommand();
         new BuildModeCommand();
+        new ChatChannelCommand();
 
         new GmaCommand();
         new GmcCommand();
@@ -42,6 +44,7 @@ public class CorePlugin extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new MongoListener(), this);
         pm.registerEvents(new CommandListener(), this);
+        pm.registerEvents(new ChatManager(), this);
 
         Language.initLanguageManager();
 

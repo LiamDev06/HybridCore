@@ -20,6 +20,8 @@ net\hybrid\core\commands\StaffHubCommand.class
 net\hybrid\core\commands\SetChatColorCommand.class
 net\hybrid\core\rank\RankCommand.class
 net\hybrid\core\CorePlugin.class
+net\hybrid\core\commands\ChatChannelCommand.class
+net\hybrid\core\managers\ChatManager.class
 net\hybrid\core\utility\AnvilGUI$AnvilClickEventHandler.class
 net\hybrid\core\utility\AnvilGUI$AnvilContainer.class
 net\hybrid\core\utility\SoundManager.class

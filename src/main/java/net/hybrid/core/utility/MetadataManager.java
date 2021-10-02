@@ -1,6 +1,7 @@
 package net.hybrid.core.utility;
 
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.utility.enums.ChatChannel;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 
@@ -49,6 +50,19 @@ public class MetadataManager {
         Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
 
         document.replace("staffBuildMode", value);
+
+        CorePlugin.getInstance().getMongo().saveDocument("playerData", document, uuid);
+    }
+
+    public ChatChannel getChatChannel() {
+        Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
+        return ChatChannel.valueOf(document.getString("chatChannel").toUpperCase());
+    }
+
+    public void setChatChannel(ChatChannel chatChannel) {
+        Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
+
+        document.replace("chatChannel", chatChannel.name());
 
         CorePlugin.getInstance().getMongo().saveDocument("playerData", document, uuid);
     }

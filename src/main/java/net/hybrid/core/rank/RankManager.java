@@ -2,6 +2,7 @@ package net.hybrid.core.rank;
 
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
+import net.hybrid.core.utility.enums.ChatChannel;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
 import org.bukkit.ChatColor;
@@ -40,6 +41,13 @@ public class RankManager {
 
         document.replace("adminDebugMode", false);
         document.replace("chatColor", ChatColor.WHITE.name());
+
+        if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
+                document.getString("chatChannel").equalsIgnoreCase("builder") ||
+                document.getString("chatChannel").equalsIgnoreCase("admin") ||
+                document.getString("chatChannel").equalsIgnoreCase("owner")) {
+            document.replace("chatChannel", "ALL");
+        }
 
         mongo.saveDocument("playerData", document, uuid);
     }
