@@ -8,11 +8,17 @@ import net.hybrid.core.commands.gmcommands.GmspCommand;
 import net.hybrid.core.data.Language;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.data.MongoListener;
-import net.hybrid.core.managers.ChatManager;
 import net.hybrid.core.managers.CommandListener;
+import net.hybrid.core.managers.NetworkChatManager;
 import net.hybrid.core.rank.RankCommand;
+import net.hybrid.core.utility.BadWordsFilter;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
 
 public class CorePlugin extends JavaPlugin {
 
@@ -27,9 +33,6 @@ public class CorePlugin extends JavaPlugin {
         mongo = new Mongo(this);
 
         new AllChatCommand();
-        new StaffChatCommand();
-        new AdminChatCommand();
-        new OwnerChatCommand();
 
         new RankCommand();
         new ItemCommand();
@@ -38,6 +41,8 @@ public class CorePlugin extends JavaPlugin {
         new StaffHubCommand();
         new BuildModeCommand();
         new ChatChannelCommand();
+        new TpHereCommand();
+        new TpAllCommand();
 
         new GmaCommand();
         new GmcCommand();
@@ -49,9 +54,26 @@ public class CorePlugin extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new MongoListener(), this);
         pm.registerEvents(new CommandListener(), this);
-        pm.registerEvents(new ChatManager(), this);
+        pm.registerEvents(new NetworkChatManager(), this);
 
         Language.initLanguageManager();
+
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+        File file = new File(getDataFolder(), "bad-words.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        if (!file.exists() || !config.getStringList("words").equals(BadWordsFilter.getBadWords())) {
+            config.set("words", "");
+            config.set("words", BadWordsFilter.getBadWords());
+
+            try {
+                config.save(file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
 
         getLogger().info("Hybrid Core system has been SUCCESSFULLY loaded in " + (System.currentTimeMillis() - time) + "ms!");
     }

@@ -1,33 +1,45 @@
 package net.hybrid.core.rank;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
-import net.hybrid.core.utility.enums.ChatChannel;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class RankManager {
 
     private final UUID uuid;
     private final Mongo mongo = CorePlugin.getInstance().getMongo();
+    private static final HashMap<UUID, PlayerRank> rankCache = new HashMap<>();
 
     public RankManager(UUID uuid) {
         this.uuid = uuid;
     }
 
     public void setRank(PlayerRank playerRank) {
+        if (rankCache.containsKey(uuid)) {
+            rankCache.replace(uuid, playerRank);
+        } else {
+            rankCache.put(uuid, playerRank);
+            return;
+        }
+
         Document document = mongo.loadDocument("playerData", uuid);
 
         if (playerRank.isStaffRank()) {
             document.replace("staffRank", playerRank.name());
             document.replace("staffNotifyMode", true);
-
-            if (!CorePlugin.getInstance().getMongo().getStaff().contains(uuid)) {
-                CorePlugin.getInstance().getMongo().getStaff().add(uuid);
-            }
 
         } else if (playerRank == PlayerRank.YOUTUBER || playerRank == PlayerRank.TWITCH_STREAMER || playerRank == PlayerRank.PARTNER) {
             document.replace("specialRank", playerRank.name());
@@ -41,10 +53,6 @@ public class RankManager {
                     document.getString("chatChannel").equalsIgnoreCase("owner")) {
                 document.replace("chatChannel", "ALL");
             }
-
-            CorePlugin.getInstance().getMongo().getStaff().remove(uuid);
-            CorePlugin.getInstance().getMongo().getAdmins().remove(uuid);
-            CorePlugin.getInstance().getMongo().getOwners().remove(uuid);
 
         } else {
             document.replace("playerRank", playerRank.name());
@@ -60,17 +68,26 @@ public class RankManager {
                 document.replace("chatChannel", "ALL");
             }
 
-            CorePlugin.getInstance().getMongo().getStaff().remove(uuid);
-            CorePlugin.getInstance().getMongo().getAdmins().remove(uuid);
-            CorePlugin.getInstance().getMongo().getOwners().remove(uuid);
-        }
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Forward");
+            out.writeUTF("ONLINE");
+            out.writeUTF("RankUpdate");
 
-        if (playerRank == PlayerRank.ADMIN) {
-            CorePlugin.getInstance().getMongo().getAdmins().add(uuid);
-        }
+            ByteArrayOutputStream msgBytes = new ByteArrayOutputStream();
+            DataOutputStream msgOut = new DataOutputStream(msgBytes);
 
-        if (playerRank == PlayerRank.OWNER) {
-            CorePlugin.getInstance().getMongo().getOwners().add(uuid);
+            try {
+                msgOut.writeUTF(playerRank.name());
+                msgOut.writeUTF(uuid.toString());
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+            out.write(msgBytes.toByteArray());
+            out.write(msgBytes.toByteArray());
+
+            Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+            player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
         }
 
         document.replace("adminDebugMode", false);
@@ -80,6 +97,10 @@ public class RankManager {
     }
 
     public PlayerRank getRank() {
+        if (rankCache.containsKey(uuid)) {
+            return rankCache.get(uuid);
+        }
+
         Document document = mongo.loadDocument("playerData", uuid);
 
         if (!document.getString("staffRank").equalsIgnoreCase("")) {
@@ -115,6 +136,10 @@ public class RankManager {
 
     public boolean isAdmin() {
         return hasRank(PlayerRank.ADMIN);
+    }
+
+    public static HashMap<UUID, PlayerRank> getRankCache() {
+        return rankCache;
     }
 
 }

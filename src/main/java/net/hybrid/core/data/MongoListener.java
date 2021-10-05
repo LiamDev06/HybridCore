@@ -2,6 +2,7 @@ package net.hybrid.core.data;
 
 import com.mongodb.client.model.Filters;
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.rank.RankManager;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.*;
 import org.bson.Document;
@@ -81,23 +82,17 @@ public class MongoListener implements Listener {
                     .find(Filters.eq("playerUuid",
                             player.getUniqueId().toString())).first();
 
-            if (hybridPlayer.getRankManager().isStaff()) {
-                CorePlugin.getInstance().getMongo().getStaff().add(player.getUniqueId());
-            }
-
-            if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN)) {
-                CorePlugin.getInstance().getMongo().getAdmins().add(player.getUniqueId());
-            }
-
-            if (hybridPlayer.getRankManager().hasRank(PlayerRank.OWNER)) {
-                CorePlugin.getInstance().getMongo().getOwners().add(player.getUniqueId());
-            }
-
             document.replace("playerName", player.getName());
         }
 
         mongo.saveDocument("serverData", playerListDocument, "serverDataType", "playerDataList");
         mongo.saveDocument("playerData", document, player.getUniqueId());
+
+        if (RankManager.getRankCache().containsKey(player.getUniqueId())) {
+            RankManager.getRankCache().replace(player.getUniqueId(), hybridPlayer.getRankManager().getRank());
+        } else {
+            RankManager.getRankCache().put(player.getUniqueId(), hybridPlayer.getRankManager().getRank());
+        }
     }
 
     @EventHandler
@@ -108,11 +103,9 @@ public class MongoListener implements Listener {
 
         document.append("lastLogout", System.currentTimeMillis());
 
-        CorePlugin.getInstance().getMongo().getStaff().remove(player.getUniqueId());
-        CorePlugin.getInstance().getMongo().getAdmins().remove(player.getUniqueId());
-        CorePlugin.getInstance().getMongo().getOwners().remove(player.getUniqueId());
-
         mongo.saveDocument("playerData", document, player.getUniqueId());
+
+        RankManager.getRankCache().remove(player.getUniqueId());
     }
 
 }

@@ -14,19 +14,12 @@ import java.util.UUID;
 public class Mongo {
 
     private final MongoDatabase coreDatabase;
-    private final ArrayList<UUID> owners;
-    private final ArrayList<UUID> admins;
-    private final ArrayList<UUID> staff;
 
     public Mongo(CorePlugin plugin) {
         String connectionString = "mongodb+srv://HybridNetwork:jdfsdsf879hjgfdg5@cluster0.0bfk6.mongodb.net/test?retryWrites=true&w=majority";
         MongoClient mongoClient = new MongoClient(new MongoClientURI(connectionString));
 
         this.coreDatabase = mongoClient.getDatabase("coredata");
-
-        this.owners = new ArrayList<>();
-        this.admins = new ArrayList<>();
-        this.staff = new ArrayList<>();
 
         plugin.getLogger().info("The core database has been CONNECTED.");
     }
@@ -64,18 +57,6 @@ public class Mongo {
 
     public MongoDatabase getCoreDatabase() {
         return coreDatabase;
-    }
-
-    public ArrayList<UUID> getOwners() {
-        return owners;
-    }
-
-    public ArrayList<UUID> getAdmins() {
-        return admins;
-    }
-
-    public ArrayList<UUID> getStaff() {
-        return staff;
     }
 }
 

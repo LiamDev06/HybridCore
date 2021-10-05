@@ -2,6 +2,8 @@ package net.hybrid.core.utility;
 
 import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.rank.RankManager;
 import org.bson.Document;
@@ -70,21 +72,35 @@ public class HybridPlayer {
     }
 
     public void sendBungeeMessage(String message) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        DataOutputStream out = new DataOutputStream(outputStream);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("Message");
+        out.writeUTF(getName());
+        out.writeUTF(CC.translate(message));
 
         Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
 
-        try {
-            out.writeUTF("Message");
-            out.writeUTF(getName());
-            out.writeUTF(CC.translate(message));
+        player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
+    }
 
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public void sendBungeeMessage(String name, String message) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
-        player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", outputStream.toByteArray());
+        out.writeUTF("Message");
+        out.writeUTF(name);
+        out.writeUTF(CC.translate(message));
+
+        getPlayer().sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
+    }
+
+    public void sendBungeeMessageRaw(String message) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
+        out.writeUTF("MessageRaw");
+        out.writeUTF(getName());
+        out.writeUTF(CC.translate(message));
+
+        getPlayer().sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
     }
 
     public UUID getUniqueId() {
