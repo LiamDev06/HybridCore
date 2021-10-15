@@ -5,6 +5,11 @@ import net.hybrid.core.commands.gmcommands.GmaCommand;
 import net.hybrid.core.commands.gmcommands.GmcCommand;
 import net.hybrid.core.commands.gmcommands.GmsCommand;
 import net.hybrid.core.commands.gmcommands.GmspCommand;
+import net.hybrid.core.managers.JoinManager;
+import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
+import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
+import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
+import net.hybrid.core.moderation.ReportCommand;
 import net.hybrid.core.data.Language;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.data.MongoListener;
@@ -12,6 +17,8 @@ import net.hybrid.core.managers.CommandListener;
 import net.hybrid.core.managers.NetworkChatManager;
 import net.hybrid.core.rank.RankCommand;
 import net.hybrid.core.utility.BadWordsFilter;
+import net.hybrid.core.utility.ServerVersion;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -23,6 +30,7 @@ import java.io.IOException;
 public class CorePlugin extends JavaPlugin {
 
     private static CorePlugin INSTANCE;
+    public static ServerVersion VERSION;
     private Mongo mongo;
 
     @Override
@@ -33,6 +41,8 @@ public class CorePlugin extends JavaPlugin {
         mongo = new Mongo(this);
 
         new AllChatCommand();
+        new LangCommand();
+        new ReportCommand();
 
         new RankCommand();
         new ItemCommand();
@@ -43,6 +53,13 @@ public class CorePlugin extends JavaPlugin {
         new ChatChannelCommand();
         new TpHereCommand();
         new TpAllCommand();
+        new CoreVersionCommand();
+        new NMSVersionCommand();
+
+        new SetNetworkLevel();
+        new CheckNetworkLevel();
+        new SetNetworkExp();
+        new CheckNetworkExp();
 
         new GmaCommand();
         new GmcCommand();
@@ -55,6 +72,7 @@ public class CorePlugin extends JavaPlugin {
         pm.registerEvents(new MongoListener(), this);
         pm.registerEvents(new CommandListener(), this);
         pm.registerEvents(new NetworkChatManager(), this);
+        pm.registerEvents(new JoinManager(), this);
 
         Language.initLanguageManager();
 
@@ -75,7 +93,17 @@ public class CorePlugin extends JavaPlugin {
             }
         }
 
-        getLogger().info("Hybrid Core system has been SUCCESSFULLY loaded in " + (System.currentTimeMillis() - time) + "ms!");
+        NetworkTabManager.init();
+        VERSION = ServerVersion.valueOf(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
+        if (VERSION == ServerVersion.v1_8_R3) {
+            new TabListManager_1_8_R3().init();
+        }
+
+        if (VERSION == ServerVersion.v1_17_R1) {
+            new TabListManager_1_17_R1().init();
+        }
+
+        getLogger().info("Hybrid Core system has been SUCCESSFULLY loaded in " + (System.currentTimeMillis() - time) + "ms! This server is running version " + VERSION);
     }
 
     @Override

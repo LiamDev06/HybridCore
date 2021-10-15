@@ -40,6 +40,10 @@
       <id>vault-repo</id>
       <url>http://nexus.hc.to/content/repositories/pub_releases</url>
     </repository>
+    <repository>
+      <id>everything</id>
+      <url>http://repo.citizensnpcs.co/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -47,6 +51,13 @@
       <artifactId>spigot</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.17-R0.1-SNAPSHOT</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/libs/spigot-1.17.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

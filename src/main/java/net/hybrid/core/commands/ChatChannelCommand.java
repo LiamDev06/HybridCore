@@ -66,7 +66,7 @@ public class ChatChannelCommand extends PlayerCommand {
             hybridPlayer.getMetadataManager().setChatChannel(channel);
             hybridPlayer.sendMessage("&bYou toggled on the &e" + channel.name() + " &bchat channel.");
             hybridPlayer.sendMessage("&bUse &c/chat all &bto return to all chat again.");
-            SoundManager.playSound(player, Sound.NOTE_BASS, 10, 3);
+            SoundManager.playSound(player, "NOTE_BASS", 10, 3);
 
         } catch (Exception exception) {
             hybridPlayer.sendMessage("&cInvalid chat channel!");

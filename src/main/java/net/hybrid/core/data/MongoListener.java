@@ -2,8 +2,11 @@ package net.hybrid.core.data;
 
 import com.mongodb.client.model.Filters;
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.managers.NetworkLevelingManager;
+import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
 import net.hybrid.core.rank.RankManager;
 import net.hybrid.core.utility.HybridPlayer;
+import net.hybrid.core.utility.MetadataManager;
 import net.hybrid.core.utility.enums.*;
 import org.bson.Document;
 import org.bukkit.ChatColor;
@@ -52,8 +55,8 @@ public class MongoListener implements Listener {
             document.append("staffRank", "");
 
             document.append("networkLevel", 1);
-            document.append("networkLevelExp", 0);
-            document.append("totalNetworkExp", 0);
+            document.append("networkLevelExp", (double) 0);
+            document.append("totalNetworkExp", (double) 0);
             document.append("chatChannel", ChatChannel.ALL.name());
             document.append("chatColor", ChatColor.WHITE.name());
             document.append("userLanguage", LanguageType.ENGLISH.name());
@@ -93,17 +96,23 @@ public class MongoListener implements Listener {
         } else {
             RankManager.getRankCache().put(player.getUniqueId(), hybridPlayer.getRankManager().getRank());
         }
+
+        if (NetworkLevelingManager.levelCache.containsKey(player.getUniqueId())) {
+            NetworkLevelingManager.levelCache.replace(player.getUniqueId(), hybridPlayer.getNetworkLevelingManager().getLevel());
+        } else {
+            NetworkLevelingManager.levelCache.put(player.getUniqueId(), hybridPlayer.getNetworkLevelingManager().getLevel());
+        }
+
+        if (NetworkLevelingManager.expCache.containsKey(player.getUniqueId())) {
+            NetworkLevelingManager.expCache.replace(player.getUniqueId(), hybridPlayer.getNetworkLevelingManager().getExp());
+        } else {
+            NetworkLevelingManager.expCache.put(player.getUniqueId(), hybridPlayer.getNetworkLevelingManager().getExp());
+        }
     }
 
     @EventHandler
     public void onLogQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        Mongo mongo = CorePlugin.getInstance().getMongo();
-        Document document = mongo.loadDocument("playerData", player.getUniqueId());
-
-        document.append("lastLogout", System.currentTimeMillis());
-
-        mongo.saveDocument("playerData", document, player.getUniqueId());
 
         RankManager.getRankCache().remove(player.getUniqueId());
     }

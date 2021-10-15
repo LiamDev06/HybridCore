@@ -41,7 +41,7 @@ public class ItemCommand extends PlayerCommand {
 
                     if (player.getInventory().firstEmpty() != -1) {
                         hybridPlayer.sendMessage("&aAdded " + amount + " &e" + material.name().replace("_", " ") + " &ato your inventory.");
-                        SoundManager.playSound(player, Sound.NOTE_PLING, 10, 3);
+                        SoundManager.playSound(player, "NOTE_PLING", 10, 3);
                         player.getInventory().addItem(giveItem);
                         return;
                     }
@@ -64,7 +64,7 @@ public class ItemCommand extends PlayerCommand {
                                 hybridPlayer.getRankManager().getRank().getPrefixSpace() +
                                         player.getName() + " &aadded 64 &e" + material.name().replace("_", " ") + " &ato your inventory."
                         );
-                        SoundManager.playSound(player, Sound.NOTE_PLING, 10, 3);
+                        SoundManager.playSound(player, "NOTE_PLING", 10, 3);
                         target.getInventory().addItem(giveItem);
                         return;
                     }
@@ -77,7 +77,7 @@ public class ItemCommand extends PlayerCommand {
                     hybridPlayer.sendMessage("&aAdded " + "64" + " &e" + material.name().replace("_", " ") + " &ato your inventory.");
 
                     ItemStack giveItem = new ItemStack(material, 64);
-                    SoundManager.playSound(player, Sound.NOTE_PLING, 10, 3);
+                    SoundManager.playSound(player, "NOTE_PLING", 10, 3);
                     player.getInventory().addItem(giveItem);
                     return;
                 }

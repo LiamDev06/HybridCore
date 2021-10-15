@@ -2,9 +2,11 @@ package net.hybrid.core.utility;
 
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.utility.enums.ChatChannel;
+import net.hybrid.core.utility.enums.LanguageType;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class MetadataManager {
@@ -67,6 +69,18 @@ public class MetadataManager {
         CorePlugin.getInstance().getMongo().saveDocument("playerData", document, uuid);
     }
 
+    public void setLanguageType(LanguageType languageType) {
+        Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
+
+        document.replace("userLanguage", languageType.name());
+
+        CorePlugin.getInstance().getMongo().saveDocument("playerData", document, uuid);
+    }
+
+    public LanguageType getLanguageType() {
+        Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
+        return LanguageType.valueOf(document.getString("userLanguage").toUpperCase());
+    }
 }
 
 

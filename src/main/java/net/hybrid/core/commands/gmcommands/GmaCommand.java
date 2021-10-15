@@ -4,6 +4,7 @@ import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
+import net.hybrid.core.utility.SoundManager;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -30,7 +31,7 @@ public class GmaCommand extends PlayerCommand {
         if (args.length == 0) {
             player.setGameMode(GAMEMODE);
             player.sendMessage(CC.translate("&aYou set your own gamemode to &e" + GAMEMODE.name() + "&a."));
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 3);
+            SoundManager.playSound(player, "NOTE_PLING", 10, 3);
             return;
         }
 
@@ -39,15 +40,15 @@ public class GmaCommand extends PlayerCommand {
             if (targetPlayer.getUniqueId() == player.getUniqueId()) {
                 player.setGameMode(GAMEMODE);
                 player.sendMessage(CC.translate("&aYou set your own gamemode to &e" + GAMEMODE.name() + "&a."));
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 3);
+                SoundManager.playSound(player, "NOTE_PLING", 10, 3);
                 return;
             }
 
             targetPlayer.setGameMode(GAMEMODE);
             targetPlayer.sendMessage(CC.translate("&6" + player.getName() + " &aset your gamemode to &e" + GAMEMODE.name() + "&a."));
             player.sendMessage(CC.translate("&aYou set &6" + targetPlayer.getName() + "'s &agamemode to &e" + GAMEMODE.name() + "&a."));
-            player.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 3);
-            targetPlayer.playSound(player.getLocation(), Sound.NOTE_PLING, 10, 3);
+            SoundManager.playSound(player, "NOTE_PLING", 10, 3);
+            SoundManager.playSound(targetPlayer, "NOTE_PLING", 10, 3);
 
         } catch (NullPointerException exception) {
             hybridPlayer.sendMessage("&cThis player is not online!");

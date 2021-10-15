@@ -5,6 +5,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.managers.NetworkLevelingManager;
 import net.hybrid.core.rank.RankManager;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -22,11 +23,13 @@ public class HybridPlayer {
 
     private final RankManager rankManager;
     private final MetadataManager metadataManager;
+    private final NetworkLevelingManager networkLevelingManager;
 
     public HybridPlayer(UUID uuid) {
         this.uuid = uuid;
         this.rankManager = new RankManager(uuid);
         this.metadataManager = new MetadataManager(uuid);
+        this.networkLevelingManager = new NetworkLevelingManager(uuid);
     }
 
     public RankManager getRankManager() {
@@ -35,6 +38,10 @@ public class HybridPlayer {
 
     public MetadataManager getMetadataManager() {
         return metadataManager;
+    }
+
+    public NetworkLevelingManager getNetworkLevelingManager() {
+        return networkLevelingManager;
     }
 
     public void sendMessage(String message) {
@@ -131,6 +138,15 @@ public class HybridPlayer {
         } catch (NullPointerException ignored) {}
 
         return false;
+    }
+
+    public boolean isOnline() {
+        Document document = CorePlugin.getInstance().getMongo().loadDocument("playerData", uuid);
+
+        long login = document.getLong("lastLogin");
+        long logout = document.getLong("lastLogout");
+
+        return (login > logout);
     }
 
 }

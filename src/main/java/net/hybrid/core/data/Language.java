@@ -58,7 +58,11 @@ public class Language {
                         .append("requires_moderator", "&cYou must be a moderator or above to perform this!")
                         .append("requires_helper", "&cYou must be a helper or above to perform this!")
                         .append("missing_arguments", "&cMissing required arguments!")
-                        .append("specify_player", "&cYou need to specify a player!");
+                        .append("specify_player", "&cYou need to specify a player!")
+                        .append("missing_arguments_lang", "&cMissing arguments! Please specify a language with &6/lang <language>&c.")
+                        .append("available_languages", "&cThe available languages are:")
+                        .append("invalid_language_type", "&cInvalid language type! Use &6/lang <language>&c. The available languages are:")
+                        .append("language_updated", "&aYour language was updated to &6%%language%%&a.");
             }
 
             mongo.saveDocument("translationData", document, "languageType", language.name());
