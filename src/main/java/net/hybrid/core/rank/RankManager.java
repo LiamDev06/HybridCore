@@ -38,7 +38,6 @@ public class RankManager {
             rankCache.replace(uuid, playerRank);
         } else {
             rankCache.put(uuid, playerRank);
-            return;
         }
 
         Document document = mongo.loadDocument("playerData", uuid);
@@ -73,28 +72,28 @@ public class RankManager {
                     document.getString("chatChannel").equalsIgnoreCase("owner")) {
                 document.replace("chatChannel", "ALL");
             }
-
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Forward");
-            out.writeUTF("ONLINE");
-            out.writeUTF("RankUpdate");
-
-            ByteArrayOutputStream msgBytes = new ByteArrayOutputStream();
-            DataOutputStream msgOut = new DataOutputStream(msgBytes);
-
-            try {
-                msgOut.writeUTF(playerRank.name());
-                msgOut.writeUTF(uuid.toString());
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-
-            out.write(msgBytes.toByteArray());
-            out.write(msgBytes.toByteArray());
-
-            Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
-            player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
         }
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Forward");
+        out.writeUTF("ONLINE");
+        out.writeUTF("RankUpdate");
+
+        ByteArrayOutputStream msgBytes = new ByteArrayOutputStream();
+        DataOutputStream msgOut = new DataOutputStream(msgBytes);
+
+        try {
+            msgOut.writeUTF(playerRank.name());
+            msgOut.writeUTF(uuid.toString());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        out.write(msgBytes.toByteArray());
+        out.write(msgBytes.toByteArray());
+
+        Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
+        player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
 
         document.replace("adminDebugMode", false);
         document.replace("chatColor", ChatColor.WHITE.name());
