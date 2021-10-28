@@ -6,7 +6,6 @@ import net.hybrid.core.commands.gmcommands.GmcCommand;
 import net.hybrid.core.commands.gmcommands.GmsCommand;
 import net.hybrid.core.commands.gmcommands.GmspCommand;
 import net.hybrid.core.managers.JoinManager;
-import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
 import net.hybrid.core.moderation.ReportCommand;
@@ -93,7 +92,6 @@ public class CorePlugin extends JavaPlugin {
             }
         }
 
-        NetworkTabManager.init();
         VERSION = ServerVersion.valueOf(Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3]);
         if (VERSION == ServerVersion.v1_8_R3) {
             new TabListManager_1_8_R3().init();

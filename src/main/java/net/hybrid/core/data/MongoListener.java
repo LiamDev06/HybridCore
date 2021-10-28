@@ -115,6 +115,7 @@ public class MongoListener implements Listener {
         Player player = event.getPlayer();
 
         RankManager.getRankCache().remove(player.getUniqueId());
+        NetworkTabManager.scoreboards.remove(player.getUniqueId());
     }
 
 }

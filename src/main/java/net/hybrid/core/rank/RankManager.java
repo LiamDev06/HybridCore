@@ -6,6 +6,7 @@ import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
+import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -29,15 +30,21 @@ public class RankManager {
     }
 
     public void setRank(PlayerRank playerRank) {
-        Player player1 = Bukkit.getPlayer(uuid);
-        if (player1 != null) {
-            NetworkTabManager.setTabRank(player1, playerRank);
-        }
-
         if (rankCache.containsKey(uuid)) {
             rankCache.replace(uuid, playerRank);
         } else {
             rankCache.put(uuid, playerRank);
+        }
+
+        Player player1 = Bukkit.getPlayer(uuid);
+        if (player1 != null) {
+            NetworkTabManager.setTabRank(player1, playerRank, NetworkTabManager.scoreboards.get(uuid));
+
+            for (Player target : Bukkit.getOnlinePlayers()) {
+                if (target.getUniqueId() != uuid) {
+                    NetworkTabManager.setTabRank(target, new HybridPlayer(target.getUniqueId()).getRankManager().getRank(), NetworkTabManager.scoreboards.get(target.getUniqueId()));
+                }
+            }
         }
 
         Document document = mongo.loadDocument("playerData", uuid);

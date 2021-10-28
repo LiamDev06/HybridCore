@@ -72,6 +72,7 @@ net\hybrid\core\commands\gmcommands\GmaCommand.class
 net\hybrid\core\commands\StaffNotifyCommand.class
 net\hybrid\core\managers\tabmanagers\TabListManager_1_8_R3.class
 net\hybrid\core\managers\tabmanagers\TabListManager_1_8_R3$1.class
+net\hybrid\core\utility\ScoreHelper.class
 net\hybrid\core\utility\ServerVersion.class
 net\hybrid\core\utility\ItemBuilder.class
 net\hybrid\core\managers\NetworkChatManager.class
