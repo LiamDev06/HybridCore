@@ -2,7 +2,9 @@ package net.hybrid.core.managers;
 
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
+import net.hybrid.core.events.PlayerNetworkLevelUpEvent;
 import org.bson.Document;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -29,6 +31,14 @@ public class NetworkLevelingManager {
     }
 
     public void setLevel(int level) {
+        PlayerNetworkLevelUpEvent playerNetworkLevelUpEvent =
+                new PlayerNetworkLevelUpEvent(uuid, level, getLevel());
+        Bukkit.getPluginManager().callEvent(playerNetworkLevelUpEvent);
+
+        if (playerNetworkLevelUpEvent.isCancelled()) {
+            return;
+        }
+
         if (levelCache.containsKey(uuid)) {
             levelCache.replace(uuid, level);
         } else {
@@ -64,23 +74,11 @@ public class NetworkLevelingManager {
     }
 
     public double getExpRequiredForNextLevel(int level) {
-        double required = 0;
-
-        for (int i = 0; i == level; i++) {
-            required = required + 1500;
-        }
-
-        return required;
+        return 1500 * level;
     }
 
     public double getExpRequiredForNextLevel() {
-        double required = 0;
-
-        for (int i = 0; i == getLevel(); i++) {
-            required = required + 1500;
-        }
-
-        return required;
+        return 1500 * getLevel();
     }
 
 }

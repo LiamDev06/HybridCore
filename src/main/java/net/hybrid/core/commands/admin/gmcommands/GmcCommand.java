@@ -1,4 +1,4 @@
-package net.hybrid.core.commands.gmcommands;
+package net.hybrid.core.commands.admin.gmcommands;
 
 import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.CC;
@@ -8,16 +8,15 @@ import net.hybrid.core.utility.SoundManager;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-public class GmsCommand extends PlayerCommand {
+public class GmcCommand extends PlayerCommand {
 
-    public GmsCommand(){
-        super("gms");
+    public GmcCommand(){
+        super("gmc");
     }
 
-    private final GameMode GAMEMODE = GameMode.SURVIVAL;
+    private final GameMode GAMEMODE = GameMode.CREATIVE;
 
     @Override
     public void onPlayerCommand(Player player, String[] args) {

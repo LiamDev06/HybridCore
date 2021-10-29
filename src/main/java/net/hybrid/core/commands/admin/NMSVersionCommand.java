@@ -1,4 +1,4 @@
-package net.hybrid.core.commands;
+package net.hybrid.core.commands.admin;
 
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Language;

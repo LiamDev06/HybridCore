@@ -1,11 +1,17 @@
 package net.hybrid.core;
 
 import net.hybrid.core.commands.*;
-import net.hybrid.core.commands.gmcommands.GmaCommand;
-import net.hybrid.core.commands.gmcommands.GmcCommand;
-import net.hybrid.core.commands.gmcommands.GmsCommand;
-import net.hybrid.core.commands.gmcommands.GmspCommand;
+import net.hybrid.core.commands.admin.*;
+import net.hybrid.core.commands.staff.CheckNetworkExp;
+import net.hybrid.core.commands.admin.gmcommands.GmaCommand;
+import net.hybrid.core.commands.admin.gmcommands.GmcCommand;
+import net.hybrid.core.commands.admin.gmcommands.GmsCommand;
+import net.hybrid.core.commands.admin.gmcommands.GmspCommand;
+import net.hybrid.core.commands.staff.CheckNetworkLevel;
+import net.hybrid.core.commands.staff.StaffHubCommand;
+import net.hybrid.core.commands.staff.StaffNotifyCommand;
 import net.hybrid.core.managers.JoinManager;
+import net.hybrid.core.managers.NetworkLevelListener;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
 import net.hybrid.core.moderation.ReportCommand;
@@ -72,6 +78,7 @@ public class CorePlugin extends JavaPlugin {
         pm.registerEvents(new CommandListener(), this);
         pm.registerEvents(new NetworkChatManager(), this);
         pm.registerEvents(new JoinManager(), this);
+        pm.registerEvents(new NetworkLevelListener(), this);
 
         Language.initLanguageManager();
 

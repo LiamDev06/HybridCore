@@ -1,4 +1,4 @@
-package net.hybrid.core.commands;
+package net.hybrid.core.commands.staff;
 
 import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.HybridPlayer;

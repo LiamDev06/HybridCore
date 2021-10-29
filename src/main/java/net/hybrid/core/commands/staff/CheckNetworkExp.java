@@ -1,4 +1,4 @@
-package net.hybrid.core.commands;
+package net.hybrid.core.commands.staff;
 
 import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.HybridPlayer;
@@ -15,8 +15,8 @@ public class CheckNetworkExp extends PlayerCommand {
     @Override
     public void onPlayerCommand(Player player, String[] args) {
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
-        if (!hybridPlayer.getRankManager().isAdmin()) {
-            hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+        if (!hybridPlayer.getRankManager().isStaff()) {
+            hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_helper"));
             return;
         }
 
