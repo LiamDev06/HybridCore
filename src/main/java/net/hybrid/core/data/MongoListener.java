@@ -55,8 +55,7 @@ public class MongoListener implements Listener {
             document.append("staffRank", "");
 
             document.append("networkLevel", 1);
-            document.append("networkLevelExp", (double) 0);
-            document.append("totalNetworkExp", (double) 0);
+            document.append("networkLevelExp", 0);
             document.append("chatChannel", ChatChannel.ALL.name());
             document.append("chatColor", ChatColor.WHITE.name());
             document.append("userLanguage", LanguageType.ENGLISH.name());
@@ -65,6 +64,11 @@ public class MongoListener implements Listener {
             document.append("banExpires", "");
             document.append("muted", false);
             document.append("muteExpires", "");
+            document.append("vanished", false);
+            document.append("nicked", false);
+            document.append("nickNickname", "");
+            document.append("nickRank", "");
+            document.append("nickSkinTexture", "");
 
             document.append("friendRequestPrivacy", FriendsPrivacy.ALL.name());
             document.append("gangInvitePrivacy", GangPrivacy.ALL.name());

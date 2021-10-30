@@ -2,11 +2,9 @@ package net.hybrid.core.commands.admin;
 
 import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.HybridPlayer;
-import net.hybrid.core.utility.NetworkLevelChangeEvent;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.UuidUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class SetNetworkLevel extends PlayerCommand {
@@ -43,11 +41,7 @@ public class SetNetworkLevel extends PlayerCommand {
                 return;
             }
 
-            NetworkLevelChangeEvent networkLevelChangeEvent = new NetworkLevelChangeEvent(
-                    level, target.getNetworkLevelingManager().getLevel(), target.getUniqueId(), target
-            );
             target.getNetworkLevelingManager().setLevel(level);
-            Bukkit.getServer().getPluginManager().callEvent(networkLevelChangeEvent);
 
             hybridPlayer.sendMessage("&a&lLEVEL UPDATED! &aYou set " +
                     target.getRankManager().getRank().getPrefixSpace() + target.getName() + "&a's level to &b" + level + "&a.");

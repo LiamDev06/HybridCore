@@ -2,6 +2,7 @@ package net.hybrid.core.managers;
 
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
+import net.hybrid.core.events.PlayerNetworkExpChangeEvent;
 import net.hybrid.core.events.PlayerNetworkLevelUpEvent;
 import org.bson.Document;
 import org.bukkit.Bukkit;
@@ -14,14 +15,14 @@ public class NetworkLevelingManager {
     private final Mongo mongo = CorePlugin.getInstance().getMongo();
 
     public static HashMap<UUID, Integer> levelCache = new HashMap<>();
-    public static HashMap<UUID, Double> expCache = new HashMap<>();
+    public static HashMap<UUID, Integer> expCache = new HashMap<>();
 
     private final UUID uuid;
     public NetworkLevelingManager(UUID uuid) {
         this.uuid = uuid;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         if (levelCache.containsKey(uuid)) {
             return levelCache.get(uuid);
         }
@@ -35,15 +36,10 @@ public class NetworkLevelingManager {
                 new PlayerNetworkLevelUpEvent(uuid, level, getLevel());
         Bukkit.getPluginManager().callEvent(playerNetworkLevelUpEvent);
 
-        if (playerNetworkLevelUpEvent.isCancelled()) {
-            return;
-        }
-
         if (levelCache.containsKey(uuid)) {
             levelCache.replace(uuid, level);
         } else {
             levelCache.put(uuid, level);
-            return;
         }
 
         Document document = mongo.loadDocument("playerData", uuid);
@@ -51,21 +47,33 @@ public class NetworkLevelingManager {
         mongo.saveDocument("playerData", document, uuid);
     }
 
-    public double getExp() {
+    public Integer getExp() {
         if (expCache.containsKey(uuid)) {
             return expCache.get(uuid);
         }
 
         Document document = mongo.loadDocument("playerData", uuid);
-        return document.getDouble("networkLevelExp");
+        return document.getInteger("networkLevelExp");
     }
 
-    public void setExp(double exp) {
+    public void setExp(int exp) {
+        boolean causedLevelUp = false;
+        int expSave = exp;
+
+        if (exp >= getExpRequiredForNextLevel()) {
+            exp = exp - getExpRequiredForNextLevel();
+            setLevel(getLevel() + 1);
+            causedLevelUp = true;
+        }
+
+        PlayerNetworkExpChangeEvent expChangeEvent =
+                new PlayerNetworkExpChangeEvent(uuid, expSave, getExp(), causedLevelUp);
+        Bukkit.getPluginManager().callEvent(expChangeEvent);
+
         if (expCache.containsKey(uuid)) {
             expCache.replace(uuid, exp);
         } else {
             expCache.put(uuid, exp);
-            return;
         }
 
         Document document = mongo.loadDocument("playerData", uuid);
@@ -73,11 +81,11 @@ public class NetworkLevelingManager {
         mongo.saveDocument("playerData", document, uuid);
     }
 
-    public double getExpRequiredForNextLevel(int level) {
+    public Integer getExpRequiredForNextLevel(int level) {
         return 1500 * level;
     }
 
-    public double getExpRequiredForNextLevel() {
+    public Integer getExpRequiredForNextLevel() {
         return 1500 * getLevel();
     }
 

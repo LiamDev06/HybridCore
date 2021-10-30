@@ -24,12 +24,16 @@ public class HybridPlayer {
     private final RankManager rankManager;
     private final MetadataManager metadataManager;
     private final NetworkLevelingManager networkLevelingManager;
+    private final DisguiseManager disguiseManager;
+    private final ServerManager serverManager;
 
     public HybridPlayer(UUID uuid) {
         this.uuid = uuid;
         this.rankManager = new RankManager(uuid);
         this.metadataManager = new MetadataManager(uuid);
         this.networkLevelingManager = new NetworkLevelingManager(uuid);
+        this.disguiseManager = new DisguiseManager(uuid);
+        this.serverManager = new ServerManager(uuid);
     }
 
     public RankManager getRankManager() {
@@ -42,6 +46,14 @@ public class HybridPlayer {
 
     public NetworkLevelingManager getNetworkLevelingManager() {
         return networkLevelingManager;
+    }
+
+    public DisguiseManager getDisguiseManager() {
+        return disguiseManager;
+    }
+
+    public ServerManager getServerManager() {
+        return serverManager;
     }
 
     public void sendMessage(String message) {

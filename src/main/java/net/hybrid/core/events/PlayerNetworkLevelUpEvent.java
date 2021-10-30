@@ -1,15 +1,13 @@
 package net.hybrid.core.events;
 
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
-public class PlayerNetworkLevelUpEvent extends Event implements Cancellable {
+public class PlayerNetworkLevelUpEvent extends Event {
 
-    private static final HandlerList HANDLERS_LIST = new HandlerList();
-    private boolean isCancelled;
+    private static final HandlerList HANDLERS = new HandlerList();
 
     private int levelTo;
     private final UUID uuid;
@@ -22,22 +20,12 @@ public class PlayerNetworkLevelUpEvent extends Event implements Cancellable {
     }
 
     @Override
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.isCancelled = cancelled;
-    }
-
-    @Override
     public HandlerList getHandlers() {
-        return HANDLERS_LIST;
+        return HANDLERS;
     }
 
-    public HandlerList getHandlerList() {
-        return HANDLERS_LIST;
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     public int getOldLevel() {

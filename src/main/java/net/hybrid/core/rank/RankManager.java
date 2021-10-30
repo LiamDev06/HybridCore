@@ -6,6 +6,7 @@ import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
+import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
@@ -39,6 +40,7 @@ public class RankManager {
         Player player1 = Bukkit.getPlayer(uuid);
         if (player1 != null) {
             NetworkTabManager.setTabRank(player1, playerRank, NetworkTabManager.scoreboards.get(uuid));
+            player1.setPlayerListName(playerRank.getPrefixSpace() + player1.getName());
 
             for (Player target : Bukkit.getOnlinePlayers()) {
                 if (target.getUniqueId() != uuid) {
@@ -58,6 +60,8 @@ public class RankManager {
             document.replace("staffRank", "");
             document.replace("staffNotifyMode", false);
             document.replace("staffBuildMode", false);
+            document.replace("nicked", false);
+            document.replace("vanished", false);
 
             if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
                     document.getString("chatChannel").equalsIgnoreCase("builder") ||
@@ -72,6 +76,8 @@ public class RankManager {
             document.replace("staffRank", "");
             document.replace("staffNotifyMode", false);
             document.replace("staffBuildMode", false);
+            document.replace("nicked", false);
+            document.replace("vanished", false);
 
             if (document.getString("chatChannel").equalsIgnoreCase("staff") ||
                     document.getString("chatChannel").equalsIgnoreCase("builder") ||

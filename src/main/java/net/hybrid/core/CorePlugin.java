@@ -2,24 +2,18 @@ package net.hybrid.core;
 
 import net.hybrid.core.commands.*;
 import net.hybrid.core.commands.admin.*;
-import net.hybrid.core.commands.staff.CheckNetworkExp;
+import net.hybrid.core.commands.staff.*;
 import net.hybrid.core.commands.admin.gmcommands.GmaCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmcCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmsCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmspCommand;
-import net.hybrid.core.commands.staff.CheckNetworkLevel;
-import net.hybrid.core.commands.staff.StaffHubCommand;
-import net.hybrid.core.commands.staff.StaffNotifyCommand;
-import net.hybrid.core.managers.JoinManager;
-import net.hybrid.core.managers.NetworkLevelListener;
+import net.hybrid.core.managers.*;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
 import net.hybrid.core.moderation.ReportCommand;
 import net.hybrid.core.data.Language;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.data.MongoListener;
-import net.hybrid.core.managers.CommandListener;
-import net.hybrid.core.managers.NetworkChatManager;
 import net.hybrid.core.rank.RankCommand;
 import net.hybrid.core.utility.BadWordsFilter;
 import net.hybrid.core.utility.ServerVersion;
@@ -60,6 +54,7 @@ public class CorePlugin extends JavaPlugin {
         new TpAllCommand();
         new CoreVersionCommand();
         new NMSVersionCommand();
+        new VanishCommand();
 
         new SetNetworkLevel();
         new CheckNetworkLevel();
@@ -79,6 +74,7 @@ public class CorePlugin extends JavaPlugin {
         pm.registerEvents(new NetworkChatManager(), this);
         pm.registerEvents(new JoinManager(), this);
         pm.registerEvents(new NetworkLevelListener(), this);
+        pm.registerEvents(new PurchaseManager(), this);
 
         Language.initLanguageManager();
 

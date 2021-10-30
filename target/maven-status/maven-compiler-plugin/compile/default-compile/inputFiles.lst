@@ -8,6 +8,7 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\LanguageType.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\rank\RankCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\staff\StaffHubCommand.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\DisguiseManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\SetNetworkLevel.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\bookgui\BookUtil.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\bookgui\NmsBookHelper.java
@@ -17,6 +18,7 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\NMSVersionCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\PartyPrivacy.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\TabInterface.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\ChatChannelCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\ItemCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\CoreVersionCommand.java
@@ -31,7 +33,7 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\SetNetworkExp.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\MetadataManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\staff\CheckNetworkLevel.java
-C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\NetworkLevelChangeEvent.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\staff\VanishCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\AnvilGUI.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\UuidUtils.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\TpHereCommand.java
@@ -41,12 +43,13 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\CC.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\LangCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\NetworkLevelingManager.java
-C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\NetworkExpChangeEvent.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\actionbar\ActionbarAPI.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\staff\CheckNetworkExp.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\BuildModeCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\rank\RankManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\data\MongoListener.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\actionbar\ActionBarMessageEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\events\PlayerNetworkLevelUpEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\ReportReason.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\SetChatColorCommand.java
@@ -54,11 +57,14 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\PlayerCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ItemStackUtil.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\staff\StaffNotifyCommand.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\events\PlayerNetworkExpChangeEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ItemBuilder.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerType.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\moderation\ReportCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\SoundManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\bookgui\CustomBookOpenEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\CommandListener.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\PurchaseManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\FriendsPrivacy.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerVersion.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\BadWordsFilter.java

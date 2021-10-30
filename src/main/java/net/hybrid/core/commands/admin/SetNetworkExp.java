@@ -25,7 +25,7 @@ public class SetNetworkExp extends PlayerCommand {
         }
 
         if (args.length > 1) {
-            double exp;
+            int exp;
             HybridPlayer target = new HybridPlayer(UuidUtils.getUUIDFromName(args[0]));
             if (!target.hasJoinedServerBefore()) {
                 hybridPlayer.sendMessage("&cThis player has never played on Hybrid before!");
@@ -33,17 +33,13 @@ public class SetNetworkExp extends PlayerCommand {
             }
 
             try {
-                exp = Double.parseDouble(args[1]);
+                exp = Integer.parseInt(args[1]);
             } catch (Exception exception) {
                 hybridPlayer.sendMessage("&cInvalid exp amount!");
                 return;
             }
 
-            NetworkExpChangeEvent networkExpChangeEvent = new NetworkExpChangeEvent(
-                    target.getNetworkLevelingManager().getExp(), exp, target.getUniqueId(), target
-            );
             target.getNetworkLevelingManager().setExp(exp);
-            Bukkit.getServer().getPluginManager().callEvent(networkExpChangeEvent);
 
             hybridPlayer.sendMessage("&a&lEXP UPDATED! &aYou set " +
                     target.getRankManager().getRank().getPrefixSpace() + target.getName() + "&a's exp in their current level to &b" + exp + "&a.");
