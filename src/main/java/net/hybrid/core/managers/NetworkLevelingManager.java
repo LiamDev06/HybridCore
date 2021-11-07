@@ -61,7 +61,7 @@ public class NetworkLevelingManager {
         int expSave = exp;
 
         if (exp >= getExpRequiredForNextLevel()) {
-            exp = exp - getExpRequiredForNextLevel();
+            exp = (exp + getExp()) - getExpRequiredForNextLevel();
             setLevel(getLevel() + 1);
             causedLevelUp = true;
         }

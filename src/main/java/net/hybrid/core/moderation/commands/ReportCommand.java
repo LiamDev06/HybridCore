@@ -1,27 +1,19 @@
-package net.hybrid.core.moderation;
+package net.hybrid.core.moderation.commands;
 
 import net.hybrid.core.moderation.PlayerReportManager;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.SoundManager;
 import net.hybrid.core.utility.UuidUtils;
-import net.hybrid.core.utility.bookgui.BookUtil;
-import net.hybrid.core.utility.enums.ReportReason;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class ReportCommand extends PlayerCommand {
 
     public ReportCommand() {
         super("report", "userreport", "playerreport", "reportplayer");
     }
-
-    public static ArrayList<UUID> inCustomReportReason = new ArrayList<>();
 
     @Override
     public void onPlayerCommand(Player player, String[] args) {

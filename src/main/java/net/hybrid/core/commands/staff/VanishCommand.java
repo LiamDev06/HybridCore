@@ -7,6 +7,7 @@ import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.ServerType;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class VanishCommand extends PlayerCommand {
@@ -31,7 +32,8 @@ public class VanishCommand extends PlayerCommand {
         // VANISH
         if (hybridPlayer.getDisguiseManager().isVanished()) {
             hybridPlayer.sendMessage("&aYou reappeared!");
-            player.setPlayerListName(hybridPlayer.getRankManager().getRank().getPrefixSpace() + player.getName());
+            CommandSender sender = Bukkit.getConsoleSender();
+            Bukkit.dispatchCommand(sender, "nte player " + player.getName() + " suffix ''");
             hybridPlayer.getDisguiseManager().setVanished(false);
 
             for (Player target : Bukkit.getOnlinePlayers()) {
@@ -43,7 +45,9 @@ public class VanishCommand extends PlayerCommand {
 
             hybridPlayer.sendMessage("&aYou vanished! Unvanish by typing &6/vanish &aagain.");
             hybridPlayer.getDisguiseManager().setVanished(true);
-            player.setPlayerListName(hybridPlayer.getRankManager().getRank().getPrefixSpace() + player.getName() + CC.translate(" &5[V]"));
+
+            CommandSender sender = Bukkit.getConsoleSender();
+            Bukkit.dispatchCommand(sender, "nte player " + player.getName() + " suffix ' &5[V]'");
 
             for (Player target : Bukkit.getOnlinePlayers()) {
                 HybridPlayer hybridTarget = new HybridPlayer(target.getUniqueId());

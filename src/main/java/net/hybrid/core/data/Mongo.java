@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.InsertOneOptions;
 import com.mongodb.client.model.UpdateOptions;
 import net.hybrid.core.CorePlugin;
 import org.bson.Document;
@@ -49,10 +50,18 @@ public class Mongo {
                 , new UpdateOptions().upsert(true));
     }
 
+    public void saveDocument(String collectionName, Document document) {
+        coreDatabase.getCollection(collectionName).insertOne(document);
+    }
+
     public void saveDocument(String collectionName, Document document, String find, Object value) {
         coreDatabase.getCollection(collectionName)
                 .replaceOne(Filters.eq(find, value), document
                         , new UpdateOptions().upsert(true));
+    }
+
+    public void deleteDocument(String collectionName, Document document) {
+        coreDatabase.getCollection(collectionName).deleteOne(document);
     }
 
     public MongoDatabase getCoreDatabase() {

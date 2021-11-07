@@ -17,6 +17,11 @@ public class ChatChannelCommand extends PlayerCommand {
     public void onPlayerCommand(Player player, String[] args) {
         HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
 
+        if (hybridPlayer.isMuted()) {
+            hybridPlayer.sendMessage("&c&lCURRENTLY MUTED! &cYou are currently muted meaning you cannot modify your chat channel!");
+            return;
+        }
+
         if (args.length == 0) {
             hybridPlayer.sendMessage("&cMissing arguments! Use /chat <chatchannel>");
             hybridPlayer.sendMessage("&cAvailable channels: " + getChannels(hybridPlayer));

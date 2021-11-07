@@ -34,6 +34,7 @@ public class MongoListener implements Listener {
 
         if (!playerListDocument.containsKey(player.getUniqueId().toString())) {
             playerListDocument.append(player.getUniqueId().toString(), player.getName());
+            playerListDocument.replace("highestUniqueReached", playerListDocument.getInteger("highestUniqueReached") + 1);
         } else {
             if (!playerListDocument.getString(player.getUniqueId().toString()).equalsIgnoreCase(player.getName())) {
                 playerListDocument.replace(player.getUniqueId().toString(), player.getName());
@@ -61,9 +62,11 @@ public class MongoListener implements Listener {
             document.append("userLanguage", LanguageType.ENGLISH.name());
             document.append("messageLastReplyUuid", "");
             document.append("banned", false);
-            document.append("banExpires", "");
+            document.append("banId", "");
             document.append("muted", false);
-            document.append("muteExpires", "");
+            document.append("muteId", "");
+            document.append("waitingOnSeeWarning", false);
+            document.append("warningWaitingId", "");
             document.append("vanished", false);
             document.append("nicked", false);
             document.append("nickNickname", "");
@@ -119,6 +122,13 @@ public class MongoListener implements Listener {
         Player player = event.getPlayer();
 
         RankManager.getRankCache().remove(player.getUniqueId());
+        NetworkLevelingManager.levelCache.remove(player.getUniqueId());
+        NetworkLevelingManager.expCache.remove(player.getUniqueId());
+
+        if (NetworkTabManager.scoreboards.get(player.getUniqueId()).getObjective("sidebar") != null) {
+            NetworkTabManager.scoreboards.get(player.getUniqueId()).getObjective("sidebar").unregister();
+        }
+
         NetworkTabManager.scoreboards.remove(player.getUniqueId());
     }
 

@@ -8,10 +8,12 @@ import net.hybrid.core.data.Mongo;
 import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
+import net.hybrid.core.utility.ServerVersion;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.ByteArrayOutputStream;
@@ -39,13 +41,11 @@ public class RankManager {
 
         Player player1 = Bukkit.getPlayer(uuid);
         if (player1 != null) {
-            NetworkTabManager.setTabRank(player1, playerRank, NetworkTabManager.scoreboards.get(uuid));
-            player1.setPlayerListName(playerRank.getPrefixSpace() + player1.getName());
-
-            for (Player target : Bukkit.getOnlinePlayers()) {
-                if (target.getUniqueId() != uuid) {
-                    NetworkTabManager.setTabRank(target, new HybridPlayer(target.getUniqueId()).getRankManager().getRank(), NetworkTabManager.scoreboards.get(target.getUniqueId()));
-                }
+            CommandSender sender = Bukkit.getConsoleSender();
+            if (CorePlugin.VERSION != ServerVersion.v1_17_R1) {
+                Bukkit.dispatchCommand(sender, "nte player " + player1.getName() + " clear");
+                Bukkit.dispatchCommand(sender, "nte player " + player1.getName() + " prefix '" + playerRank.getPrefixSpace() + "'");
+                Bukkit.dispatchCommand(sender, "nte player " + player1.getName() + " priority " + playerRank.getNtePriority());
             }
         }
 

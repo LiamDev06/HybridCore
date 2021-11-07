@@ -5,6 +5,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;
+import net.hybrid.core.data.Mongo;
 import net.hybrid.core.managers.NetworkLevelingManager;
 import net.hybrid.core.rank.RankManager;
 import org.bson.Document;
@@ -16,10 +17,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class HybridPlayer {
 
     private final UUID uuid;
+    private final Mongo mongo = CorePlugin.getInstance().getMongo();
 
     private final RankManager rankManager;
     private final MetadataManager metadataManager;
@@ -59,7 +62,14 @@ public class HybridPlayer {
     public void sendMessage(String message) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+
+        String[] args = message.split(" ");
+        StringBuilder newString = new StringBuilder();
+        for (String s : args) {
+            newString.append(replaceColor(s)).append(" ");
+        }
+
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', newString.toString().trim()));
     }
 
     public Player getPlayer() {
@@ -134,6 +144,64 @@ public class HybridPlayer {
         return rankManager.getRank().getColor() + getName();
     }
 
+    public boolean isBanned() {
+        Document document = mongo.loadDocument("playerData", uuid);
+        return document.getBoolean("banned");
+    }
+
+    public boolean isMuted() {
+        Document document = mongo.loadDocument("playerData", uuid);
+        if (document.getString("muteId").equalsIgnoreCase("")) {
+            return false;
+        }
+
+        Document muteDoc = mongo.loadDocument("punishments", "punishmentId",
+                document.getString("muteId"));
+
+        if (System.currentTimeMillis() > muteDoc.getLong("expires")) {
+            document.replace("muted", false);
+            document.replace("muteId", "");
+            mongo.saveDocument("playerData", document, uuid);
+
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.sendMessage(CC.translate("&7&m---------------------------"));
+                player.sendMessage(CC.translate("&a&lMUTE EXPIRED!"));
+                player.sendMessage(CC.translate("&aYour mute has now expired meaning you can send messages again."));
+                player.sendMessage(CC.translate(""));
+                player.sendMessage(CC.translate("&7Please get familiar with our rules to avoid more punishments in the future."));
+                player.sendMessage(CC.translate("&7&m---------------------------"));
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public String getMuteExpiresNormal() {
+        Document document = mongo.loadDocument("playerData", uuid);
+        if (document.getString("muteId").equalsIgnoreCase("")) {
+            return "NO ACTIVE MUTE [ERROR-4CG6Z]";
+        }
+
+        Document muteDoc = mongo.loadDocument("punishments", "punishmentId",
+                document.getString("muteId"));
+        long millisLeft = muteDoc.getLong("expires") - System.currentTimeMillis();
+
+        return timeAsString(millisLeft);
+    }
+
+    public String getBanId() {
+        Document document = mongo.loadDocument("playerData", uuid);
+        return document.getString("banId");
+    }
+
+    public String getMuteId() {
+        Document document = mongo.loadDocument("playerData", uuid);
+        return document.getString("muteId");
+    }
+
     public boolean hasJoinedServerBefore() {
         Document document = CorePlugin.getInstance().getMongo().loadDocument(
                 "serverData", "serverDataType", "playerDataList"
@@ -161,6 +229,44 @@ public class HybridPlayer {
         return (login > logout);
     }
 
+    private static String timeAsString(long timePeriod){
+
+        long millis = timePeriod;
+
+        String output = "";
+
+        long days = TimeUnit.MILLISECONDS.toDays(millis);
+        millis -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(millis);
+        millis -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millis);
+        millis -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
+
+        if (days > 1) output += days + " days ";
+        else if (days == 1) output += days + " day ";
+
+        if (hours > 1) output += hours + " hours ";
+        else if (hours == 1) output += hours + " hour ";
+
+        if (minutes > 1) output += minutes + " minutes ";
+        else if (minutes == 1) output += minutes + " minute ";
+
+        if (seconds > 1) output += seconds + " seconds ";
+        else if (seconds == 1) output += seconds + " second ";
+
+        if (seconds < 1) output += " now ";
+        return output.trim();
+    }
+
+    private String replaceColor(String input) {
+        for (ChatColor cc : ChatColor.values()) {
+            if (input.toUpperCase().equalsIgnoreCase("{" + cc.name().toUpperCase() + "}")) {
+                return input.replace("{" + cc.name().toUpperCase() + "}", "§" + cc.getChar() + input);
+            }
+        }
+        return input;
+    }
 }
 
 

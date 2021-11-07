@@ -4,12 +4,14 @@ import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class CommandListener implements Listener {
 
@@ -87,6 +89,76 @@ public class CommandListener implements Listener {
                 ));
             } catch (Exception e) {
                 hybridPlayer.sendMessage("&cThis player is not online!");
+            }
+            return;
+        }
+
+        if (event.getMessage().toLowerCase().startsWith("/clear")) {
+            event.setCancelled(true);
+            if (!hybridPlayer.getRankManager().isAdmin()) {
+                hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+                return;
+            }
+
+            String[] args = event.getMessage().split(" ");
+            if (args.length == 1) {
+                player.getInventory().clear();
+                player.getItemInHand().setType(Material.AIR);
+
+                player.getInventory().setHelmet(new ItemStack(Material.AIR));
+                player.getInventory().setChestplate(new ItemStack(Material.AIR));
+                player.getInventory().setLeggings(new ItemStack(Material.AIR));
+                player.getInventory().setBoots(new ItemStack(Material.AIR));
+
+                hybridPlayer.sendMessage("&aYou cleared your inventory!");
+                hybridPlayer.sendMessage("&a&lTIP: &aUse &6/clear <player> &ato clear an inventory of someone else");
+                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 11, 2);
+                return;
+            }
+
+            Player target;
+            try {
+                target = Bukkit.getPlayer(args[1]);
+
+                if (target.getUniqueId() == player.getUniqueId()) {
+                    player.getInventory().clear();
+                    player.getItemInHand().setType(Material.AIR);
+
+                    player.getInventory().setHelmet(new ItemStack(Material.AIR));
+                    player.getInventory().setChestplate(new ItemStack(Material.AIR));
+                    player.getInventory().setLeggings(new ItemStack(Material.AIR));
+                    player.getInventory().setBoots(new ItemStack(Material.AIR));
+
+                    hybridPlayer.sendMessage("&aYou cleared your inventory!");
+                    hybridPlayer.sendMessage("&a&lTIP: &aUse &6/clear <player> &ato clear an inventory of someone else");
+                    player.playSound(player.getLocation(), Sound.NOTE_PIANO, 11, 2);
+                    return;
+                }
+
+                target.getInventory().clear();
+                target.getItemInHand().setType(Material.AIR);
+
+                target.getInventory().setHelmet(new ItemStack(Material.AIR));
+                target.getInventory().setChestplate(new ItemStack(Material.AIR));
+                target.getInventory().setLeggings(new ItemStack(Material.AIR));
+                target.getInventory().setBoots(new ItemStack(Material.AIR));
+
+                hybridPlayer.sendMessage("&aYou cleared the inventory of &6" + target.getName() + "&a!");
+                player.playSound(player.getLocation(), Sound.NOTE_PIANO, 11, 2);
+
+                target.sendMessage(CC.translate(
+                        hybridPlayer.getRankManager().getRank().getPrefixSpace() + player.getName() + " &acleared your inventory!"
+                ));
+                target.playSound(player.getLocation(), Sound.NOTE_BASS, 10, 2);
+            } catch (Exception exception) {
+                hybridPlayer.sendMessage("&c&lNOT ONLINE! &cThis player is currently not playing!");
+            }
+        }
+
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/me")) {
+            if (!hybridPlayer.getRankManager().isAdmin()) {
+                hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+                event.setCancelled(true);
             }
         }
     }

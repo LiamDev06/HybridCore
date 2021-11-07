@@ -10,7 +10,7 @@ import net.hybrid.core.commands.admin.gmcommands.GmspCommand;
 import net.hybrid.core.managers.*;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
-import net.hybrid.core.moderation.ReportCommand;
+import net.hybrid.core.moderation.commands.*;
 import net.hybrid.core.data.Language;
 import net.hybrid.core.data.Mongo;
 import net.hybrid.core.data.MongoListener;
@@ -55,6 +55,16 @@ public class CorePlugin extends JavaPlugin {
         new CoreVersionCommand();
         new NMSVersionCommand();
         new VanishCommand();
+        new KaboomCommand();
+
+        new BanCommand();
+        new UnbanCommand();
+        new KickCommand();
+        new WarnCommand();
+        new BadNameCommand();
+        new RemoveBadNameCommand();
+        new MuteCommand();
+        new UnMuteCommand();
 
         new SetNetworkLevel();
         new CheckNetworkLevel();

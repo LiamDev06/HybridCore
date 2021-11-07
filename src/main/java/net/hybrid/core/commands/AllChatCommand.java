@@ -8,6 +8,7 @@ import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.enums.ChatChannel;
 import net.hybrid.core.utility.enums.PlayerRank;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 public class AllChatCommand extends PlayerCommand {
@@ -18,12 +19,23 @@ public class AllChatCommand extends PlayerCommand {
 
     @Override
     public void onPlayerCommand(Player player, String[] args) {
+        HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
+
+        if (hybridPlayer.isMuted()) {
+            hybridPlayer.sendMessage("&7&m-------------------------------------");
+            hybridPlayer.sendMessage("&c&lYOU ARE CURRENTLY MUTED!");
+            hybridPlayer.sendMessage("&cYour mute expires in &f" + hybridPlayer.getMuteExpiresNormal());
+            hybridPlayer.sendMessage("  ");
+            hybridPlayer.sendMessage("&7Punished falsely? Create a ticket at &b&nhttps://hybridplays.com/discord&7 and explain the situation.");
+            hybridPlayer.sendMessage("&7&m-------------------------------------");
+            return;
+        }
+
         if (args.length == 0) {
             player.chat("/chat all");
             return;
         }
 
-        HybridPlayer hybridPlayer = new HybridPlayer(player.getUniqueId());
         if (!hybridPlayer.getRankManager().hasRank(ChatChannel.ALL.getRequiredRank())) {
             hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "no_permission"));
             return;

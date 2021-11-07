@@ -26,6 +26,18 @@ public class NetworkChatManager implements Listener {
         String message = event.getMessage();
         String sendMessage;
 
+        if (hybridPlayer.isMuted()) {
+            event.setCancelled(true);
+
+            hybridPlayer.sendMessage("&7&m-------------------------------------");
+            hybridPlayer.sendMessage("&c&lYOU ARE CURRENTLY MUTED!");
+            hybridPlayer.sendMessage("&cYour mute expires in &f" + hybridPlayer.getMuteExpiresNormal());
+            hybridPlayer.sendMessage("  ");
+            hybridPlayer.sendMessage("&7Punished falsely? Create a ticket at &b&nhttps://hybridplays.com/discord&7 and explain the situation.");
+            hybridPlayer.sendMessage("&7&m-------------------------------------");
+            return;
+        }
+
         final String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
 
         if (hybridPlayer.getMetadataManager().getChatChannel() == ChatChannel.ALL) {
