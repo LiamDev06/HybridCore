@@ -5,6 +5,7 @@ import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.ChatChannel;
 import net.hybrid.core.utility.enums.PlayerRank;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +28,12 @@ public class NetworkChatManager implements Listener {
         String sendMessage;
 
         if (hybridPlayer.isMuted()) {
+            Bukkit.getConsoleSender().sendMessage("[MUTED] (ALL) " + player.getName() + ": " + event.getMessage());
+        } else {
+            Bukkit.getConsoleSender().sendMessage("(ALL) " + player.getName() + ": " + event.getMessage());
+        }
+
+        if (hybridPlayer.isMuted()) {
             event.setCancelled(true);
 
             hybridPlayer.sendMessage("&7&m-------------------------------------");
@@ -35,7 +42,6 @@ public class NetworkChatManager implements Listener {
             hybridPlayer.sendMessage("  ");
             hybridPlayer.sendMessage("&7Punished falsely? Create a ticket at &b&nhttps://hybridplays.com/discord&7 and explain the situation.");
             hybridPlayer.sendMessage("&7&m-------------------------------------");
-            return;
         }
 
         final String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
@@ -77,7 +83,7 @@ public class NetworkChatManager implements Listener {
     public static boolean canSendMessageAllFilters(Player player, String message) {
         boolean containsBadWord = false;
         for (String word : BadWordsFilter.getBadWords()) {
-            if (message.toLowerCase().contains(word) && !word.toLowerCase().equalsIgnoreCase("bypass")) {
+            if (message.toLowerCase().contains(word)) {
                 containsBadWord = true;
                 break;
             }

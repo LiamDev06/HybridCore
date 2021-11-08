@@ -72,6 +72,14 @@ public class HybridPlayer {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', newString.toString().trim()));
     }
 
+    private String replaceColor(String input) {
+        for (ChatColor cc : ChatColor.values()) {
+             input = input.replace("{" + cc.name().toLowerCase() + "}", cc.toString());
+        }
+
+        return input;
+    }
+
     public Player getPlayer() {
         Player player = Bukkit.getPlayer(uuid);
 
@@ -259,14 +267,6 @@ public class HybridPlayer {
         return output.trim();
     }
 
-    private String replaceColor(String input) {
-        for (ChatColor cc : ChatColor.values()) {
-            if (input.toUpperCase().equalsIgnoreCase("{" + cc.name().toUpperCase() + "}")) {
-                return input.replace("{" + cc.name().toUpperCase() + "}", "§" + cc.getChar() + input);
-            }
-        }
-        return input;
-    }
 }
 
 
