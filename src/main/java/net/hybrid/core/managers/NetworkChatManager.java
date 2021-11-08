@@ -83,7 +83,7 @@ public class NetworkChatManager implements Listener {
     public static boolean canSendMessageAllFilters(Player player, String message) {
         boolean containsBadWord = false;
         for (String word : BadWordsFilter.getBadWords()) {
-            if (message.toLowerCase().contains(word)) {
+            if (message.toLowerCase().equalsIgnoreCase(word)) {
                 containsBadWord = true;
                 break;
             }
