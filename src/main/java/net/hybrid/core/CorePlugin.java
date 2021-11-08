@@ -1,19 +1,20 @@
 package net.hybrid.core;
 
-import net.hybrid.core.commands.*;
+import net.hybrid.core.commands.AllChatCommand;
+import net.hybrid.core.commands.ChatChannelCommand;
+import net.hybrid.core.commands.LangCommand;
 import net.hybrid.core.commands.admin.*;
-import net.hybrid.core.commands.staff.*;
 import net.hybrid.core.commands.admin.gmcommands.GmaCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmcCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmsCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmspCommand;
+import net.hybrid.core.commands.staff.*;
+import net.hybrid.core.data.Mongo;
+import net.hybrid.core.data.MongoListener;
 import net.hybrid.core.managers.*;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_17_R1;
 import net.hybrid.core.managers.tabmanagers.TabListManager_1_8_R3;
 import net.hybrid.core.moderation.commands.*;
-import net.hybrid.core.data.Language;
-import net.hybrid.core.data.Mongo;
-import net.hybrid.core.data.MongoListener;
 import net.hybrid.core.rank.RankCommand;
 import net.hybrid.core.utility.BadWordsFilter;
 import net.hybrid.core.utility.ServerVersion;
@@ -23,8 +24,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class CorePlugin extends JavaPlugin {
 
@@ -40,7 +40,7 @@ public class CorePlugin extends JavaPlugin {
         mongo = new Mongo(this);
 
         new AllChatCommand();
-        new LangCommand();
+        // new LangCommand();
         new ReportCommand();
 
         new RankCommand();
@@ -85,8 +85,6 @@ public class CorePlugin extends JavaPlugin {
         pm.registerEvents(new JoinManager(), this);
         pm.registerEvents(new NetworkLevelListener(), this);
         pm.registerEvents(new PurchaseManager(), this);
-
-        Language.initLanguageManager();
 
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);

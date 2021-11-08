@@ -1,7 +1,6 @@
 package net.hybrid.core.commands.staff;
 
 import net.hybrid.core.data.Language;
-import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.ServerType;
