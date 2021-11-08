@@ -13,7 +13,7 @@ public abstract class Menu implements InventoryHolder {
 
     protected MenuUtility menuUtility;
     protected Inventory inventory;
-    protected ItemStack FILLER_GLASS = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE)
+    protected ItemStack FILLER_GLASS = new ItemBuilder(Material.STAINED_GLASS_PANE, 1, (byte)7)
             .setDisplayName("")
             .build();
     public Menu(MenuUtility menuUtility) {

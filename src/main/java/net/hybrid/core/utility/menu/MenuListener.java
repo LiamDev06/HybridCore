@@ -26,7 +26,7 @@ public class MenuListener implements Listener {
             try {
                 menu.handleMenu(e);
             } catch (MenuManagerNotSetupException menuManagerNotSetupException) {
-                System.out.println(ChatColor.RED + "NO SE HA CONFIGURADO EL ADMINISTRADOR DE MENÚS. Usa MENUMANAGER.SETUP()");
+                System.out.println(ChatColor.RED + "THE MENU MANAGER HAS NOT BEEN CONFIGURED. USE MenuManager.setup()");
             } catch (MenuManagerException menuManagerException) {
                 menuManagerException.printStackTrace();
             }
