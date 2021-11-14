@@ -1,6 +1,5 @@
 package net.hybrid.core.utility.menu;
 
-import com.sun.istack.internal.NotNull;
 import net.hybrid.core.utility.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -44,7 +43,7 @@ public abstract class Menu implements InventoryHolder {
     }
 
     @Override
-    public @NotNull Inventory getInventory() {
+    public Inventory getInventory() {
         return inventory;
     }
 

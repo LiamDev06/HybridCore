@@ -46,6 +46,13 @@ public class CommandListener implements Listener {
             }
         }
 
+        if (event.getMessage().toLowerCase().startsWith("/help")) {
+            if (!hybridPlayer.getRankManager().isAdmin()) {
+                hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+                event.setCancelled(true);
+            }
+        }
+
         if (event.getMessage().toLowerCase().startsWith("/tp")
                 && !event.getMessage().toLowerCase().startsWith("/tphere")
                 && !event.getMessage().toLowerCase().startsWith("/tpall")) {

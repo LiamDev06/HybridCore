@@ -4,6 +4,7 @@ import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
+import net.hybrid.core.utility.SoundManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
@@ -46,7 +47,7 @@ public class TpHereCommand extends PlayerCommand {
             if (target.isOnline()) {
                 times++;
                 HybridPlayer targetUser = new HybridPlayer(target.getUniqueId());
-                target.getPlayer().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+                SoundManager.playSound(target, "ENDERMAN_TELEPORT");
                 target.getPlayer().teleport(player.getLocation());
                 targetUser.sendMessage(hybridPlayer.getRankManager().getRank().getPrefixSpace() +
                         player.getName() + " &ateleported you to their location.");

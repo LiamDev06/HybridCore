@@ -9,6 +9,7 @@ net\hybrid\core\commands\admin\SetNetworkExp.class
 net\hybrid\core\utility\ItemStackUtil.class
 net\hybrid\core\commands\staff\StaffNotifyCommand.class
 net\hybrid\core\rank\RankCommand.class
+net\hybrid\core\utility\menu\MenuManager.class
 net\hybrid\core\utility\AnvilGUI$AnvilClickEventHandler.class
 net\hybrid\core\utility\AnvilGUI$AnvilContainer.class
 net\hybrid\core\managers\NetworkLevelingManager.class
@@ -45,7 +46,9 @@ net\hybrid\core\utility\actionbar\ActionbarAPI$1.class
 net\hybrid\core\commands\staff\CheckNetworkLevel.class
 net\hybrid\core\commands\admin\gmcommands\GmsCommand.class
 net\hybrid\core\utility\ServerType.class
+net\hybrid\core\utility\menu\MenuManagerException.class
 net\hybrid\core\utility\BadWordsFilter.class
+net\hybrid\core\utility\menu\MenuUtility.class
 net\hybrid\core\utility\enums\LanguageType.class
 net\hybrid\core\utility\MetadataManager.class
 net\hybrid\core\utility\UuidUtils.class
@@ -62,6 +65,7 @@ net\hybrid\core\utility\AnvilGUI$AnvilClickEvent.class
 net\hybrid\core\commands\admin\ItemCommand.class
 net\hybrid\core\utility\bookgui\BookUtil$ClickAction$SimpleClickAction.class
 net\hybrid\core\utility\ServerManager.class
+net\hybrid\core\utility\menu\MenuManagerNotSetupException.class
 net\hybrid\core\commands\admin\gmcommands\GmaCommand.class
 net\hybrid\core\utility\ServerCommand.class
 net\hybrid\core\utility\PlayerCommand.class
@@ -84,9 +88,11 @@ net\hybrid\core\commands\admin\TpHereCommand.class
 net\hybrid\core\commands\LangCommand.class
 net\hybrid\core\commands\admin\CoreVersionCommand.class
 net\hybrid\core\moderation\commands\UnbanCommand.class
+net\hybrid\core\utility\menu\MenuListener.class
 net\hybrid\core\commands\admin\gmcommands\GmspCommand.class
 net\hybrid\core\managers\NetworkLevelListener.class
 net\hybrid\core\moderation\commands\BadNameCommand.class
+net\hybrid\core\utility\menu\Menu.class
 net\hybrid\core\commands\staff\VanishCommand.class
 net\hybrid\core\managers\tabmanagers\TabListManager_1_8_R3.class
 net\hybrid\core\managers\tabmanagers\TabListManager_1_8_R3$1.class

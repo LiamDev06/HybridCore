@@ -42,6 +42,7 @@ public class NetworkChatManager implements Listener {
             hybridPlayer.sendMessage("  ");
             hybridPlayer.sendMessage("&7Punished falsely? Create a ticket at &b&nhttps://hybridplays.com/discord&7 and explain the situation.");
             hybridPlayer.sendMessage("&7&m-------------------------------------");
+            return;
         }
 
         final String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
