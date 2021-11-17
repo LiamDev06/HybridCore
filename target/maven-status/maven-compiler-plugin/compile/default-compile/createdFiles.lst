@@ -7,6 +7,7 @@ net\hybrid\core\utility\enums\PartyPrivacy.class
 net\hybrid\core\utility\AnvilGUI$AnvilSlot.class
 net\hybrid\core\commands\admin\SetNetworkExp.class
 net\hybrid\core\utility\ItemStackUtil.class
+net\hybrid\core\moderation\commands\TempBanCommand.class
 net\hybrid\core\commands\staff\StaffNotifyCommand.class
 net\hybrid\core\rank\RankCommand.class
 net\hybrid\core\utility\menu\MenuManager.class
@@ -16,6 +17,7 @@ net\hybrid\core\managers\NetworkLevelingManager.class
 net\hybrid\core\utility\bookgui\CustomBookOpenEvent$Hand.class
 net\hybrid\core\utility\bookgui\BookUtil$PageBuilder.class
 net\hybrid\core\commands\admin\gmcommands\GmcCommand.class
+net\hybrid\core\managers\GameManager.class
 net\hybrid\core\commands\admin\NMSVersionCommand.class
 net\hybrid\core\data\MongoListener.class
 net\hybrid\core\managers\PurchaseManager$1.class
@@ -99,6 +101,7 @@ net\hybrid\core\managers\tabmanagers\TabListManager_1_8_R3$1.class
 net\hybrid\core\utility\ScoreHelper.class
 net\hybrid\core\moderation\commands\BanCommand.class
 net\hybrid\core\commands\admin\BuildModeCommand.class
+net\hybrid\core\commands\PlayCommand.class
 net\hybrid\core\moderation\commands\KickCommand.class
 net\hybrid\core\utility\ServerVersion.class
 net\hybrid\core\utility\ItemBuilder.class

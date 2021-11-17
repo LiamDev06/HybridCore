@@ -50,12 +50,12 @@ public class UnbanCommand extends PlayerCommand {
         }
 
         if (player.getUniqueId() == offlinePlayer.getUniqueId()) {
-            hybridPlayer.sendMessage("&cYou are literally typing this meaning you're not banned you stup-, excuse me what?");
+            hybridPlayer.sendMessage("&cYou are literally typing this meaning you're not banned you stup-, or excuse me what?");
             return;
         }
 
         if (!hybridTarget.isBanned()) {
-            hybridPlayer.sendMessage("&c&lNOT BANNED! &cThis player is not  banned and therefore cannot be unbanned!");
+            hybridPlayer.sendMessage("&c&lNOT BANNED! &cThis player is not banned and therefore cannot be unbanned!");
             return;
         }
 

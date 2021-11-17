@@ -17,10 +17,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class MuteCommand extends PlayerCommand {
+public class TempBanCommand extends PlayerCommand {
 
-    public MuteCommand() {
-        super("mute");
+    public TempBanCommand() {
+        super("tempban");
     }
 
     @Override
@@ -32,17 +32,17 @@ public class MuteCommand extends PlayerCommand {
         }
 
         if (args.length == 0) {
-            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cSpecify a player, mute duration and a reason. Valid Usage: /mute <player> <duration> <reason>");
+            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cSpecify a player, ban duration and a reason. Valid Usage: /tempban <player> <duration> <reason>");
             return;
         }
 
         if (args.length == 1) {
-            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cYou need to add a reason and a mute duration. Valid Usage: /mute <player> <duration> <reason>");
+            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cYou need to add a reason and a ban duration. Valid Usage: /tempban <player> <duration> <reason>");
             return;
         }
 
         if (args.length == 2) {
-            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cYou need to add a reason for the mute. Valid Usage: /mute <player> <duration> <reason>");
+            hybridPlayer.sendMessage("&c&lMISSING ARGUMENTS! &cYou need to add a reason for the ban. Valid Usage: /tempban <player> <duration> <reason>");
             return;
         }
 
@@ -51,7 +51,7 @@ public class MuteCommand extends PlayerCommand {
         StringBuilder reason = new StringBuilder();
 
         if (player.getUniqueId() == offlinePlayer.getUniqueId()) {
-            hybridPlayer.sendMessage("&cYou cannot mute yourself!");
+            hybridPlayer.sendMessage("&cYou cannot ban yourself!");
             return;
         }
 
@@ -61,17 +61,12 @@ public class MuteCommand extends PlayerCommand {
         }
 
         if (hybridPlayer.getRankManager().getRank().getOrdering() <= hybridTarget.getRankManager().getRank().getOrdering()) {
-            hybridPlayer.sendMessage("&c&lOUTRANKING! &cThis player either outranks you or you have the same rank meaning you cannot mute them!");
-            return;
-        }
-
-        if (hybridTarget.isMuted()) {
-            hybridPlayer.sendMessage("&c&lALREADY MUTED! &cThis player already has an active mute on their account!");
+            hybridPlayer.sendMessage("&c&lOUTRANKING! &cThis player either outranks you or you have the same rank meaning you cannot ban them!");
             return;
         }
 
         if (hybridTarget.isBanned()) {
-            hybridPlayer.sendMessage("&c&lALREADY BANNED! &cThis player is currently banned from the server, therefore a mute is not necessary!");
+            hybridPlayer.sendMessage("&c&lALREADY BANNED! &cThis player already has an active ban on their account!");
             return;
         }
 
@@ -105,7 +100,7 @@ public class MuteCommand extends PlayerCommand {
         }
 
         if (timeFormatInMillis == 0L)  {
-            hybridPlayer.sendMessage("&c&lERROR! &cSomething went wrong with setting the mute duration. Please try again!");
+            hybridPlayer.sendMessage("&c&lERROR! &cSomething went wrong with setting the ban duration. Please try again!");
             return;
         }
 
@@ -123,25 +118,23 @@ public class MuteCommand extends PlayerCommand {
 
         Document document = new Document();
         document.append("punishmentId", punishmentId);
-        document.append("punishmentType", "mute");
+        document.append("punishmentType", "tempban");
         document.append("issued", System.currentTimeMillis());
         document.append("issuerUuid", player.getUniqueId().toString());
         document.append("againstUuid", offlinePlayer.getUniqueId().toString());
         document.append("reason", finalReason);
         document.append("expires", timeFormatInMillis);
-        document.append("playerHasSeen", false);
         CorePlugin.getInstance().getMongo().saveDocument("punishments", document);
 
         Document playerDocument = CorePlugin.getInstance().getMongo().loadDocument("playerData", offlinePlayer.getUniqueId());
-        playerDocument.replace("muted", true);
-        playerDocument.replace("muteId", punishmentId);
-        playerDocument.replace("chatChannel", "ALL");
+        playerDocument.replace("banned", true);
+        playerDocument.replace("banId", punishmentId);
         CorePlugin.getInstance().getMongo().saveDocument("playerData", playerDocument, offlinePlayer.getUniqueId());
 
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("MuteIssued");
+        out.writeUTF("TempBanIssued");
         out.writeUTF("ONLINE");
-        out.writeUTF("MuteIssued");
+        out.writeUTF("TempBanIssued");
 
         ByteArrayOutputStream msgBytes = new ByteArrayOutputStream();
         DataOutputStream msgOut = new DataOutputStream(msgBytes);
@@ -166,7 +159,8 @@ public class MuteCommand extends PlayerCommand {
 
         player.sendPluginMessage(CorePlugin.getInstance(), "BungeeCord", out.toByteArray());
 
-        hybridPlayer.sendMessage("&aYou successfully muted " + hybridTarget.getRankManager().getRank().getPrefixSpace() + hybridTarget.getName() + " &afor &b" + timeFormat + " " + durationNormal + "&a, with the reason: &6" + finalReason);
+        hybridPlayer.sendMessage("&aYou successfully temporarily banned " + hybridTarget.getRankManager().getRank().getPrefixSpace() + hybridTarget.getName() + " &afor &b" + timeFormat + " " + durationNormal + "&a, with the reason: &6" + finalReason);
         player.playSound(player.getLocation(), Sound.NOTE_PLING, 11, 2);
     }
+
 }

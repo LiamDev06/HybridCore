@@ -54,21 +54,33 @@ public class ItemCommand extends PlayerCommand {
 
                     if (target.getInventory().firstEmpty() != -1) {
                         ItemStack giveItem = new ItemStack(material, 64);
+                        int amount = 64;
+
+                        if (args.length >= 3) {
+                            try {
+                                giveItem.setAmount(Integer.parseInt(args[2]));
+                                amount = Integer.parseInt(args[2]);
+
+                            } catch (Exception exception1) {
+                                hybridPlayer.sendMessage("&cInvalid amount!");
+                                return;
+                            }
+                        }
+
                         HybridPlayer hybridTarget = new HybridPlayer(target.getUniqueId());
 
                         hybridPlayer.sendMessage(
-                                "&aAdded " + "64" + " &e" + material.name().replace("_", " ") + " &ato " +
+                                "&aAdded " + amount + " &e" + material.name().replace("_", " ") + " &ato " +
                                         hybridTarget.getRankManager().getRank().getPrefixSpace() + target.getName() + "&a's inventory."
                         );
                         hybridTarget.sendMessage(
                                 hybridPlayer.getRankManager().getRank().getPrefixSpace() +
-                                        player.getName() + " &aadded 64 &e" + material.name().replace("_", " ") + " &ato your inventory."
+                                        player.getName() + " &aadded " + amount + " &e" + material.name().replace("_", " ") + " &ato your inventory."
                         );
                         SoundManager.playSound(player, "NOTE_PLING", 10, 3);
                         target.getInventory().addItem(giveItem);
                         return;
                     }
-
                     return;
                 }
 

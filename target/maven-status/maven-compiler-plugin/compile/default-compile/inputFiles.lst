@@ -64,6 +64,7 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\events\PlayerNetworkLevelUpEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\ReportReason.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\admin\SetChatColorCommand.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\GameManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\moderation\commands\BanCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\ChatChannel.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\PlayerCommand.java
@@ -75,6 +76,7 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ItemBuilder.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\ListenerManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerType.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\moderation\commands\TempBanCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\SoundManager.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\bookgui\CustomBookOpenEvent.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\managers\CommandListener.java
@@ -83,4 +85,5 @@ C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\jav
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\enums\FriendsPrivacy.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\menu\MenuManagerNotSetupException.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\ServerVersion.java
+C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\commands\PlayCommand.java
 C:\Users\liamh\OneDrive\Skrivbord\New Hybrid\Development\HybridCore\src\main\java\net\hybrid\core\utility\BadWordsFilter.java

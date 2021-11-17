@@ -3,6 +3,7 @@ package net.hybrid.core;
 import net.hybrid.core.commands.AllChatCommand;
 import net.hybrid.core.commands.ChatChannelCommand;
 import net.hybrid.core.commands.LangCommand;
+import net.hybrid.core.commands.PlayCommand;
 import net.hybrid.core.commands.admin.*;
 import net.hybrid.core.commands.admin.gmcommands.GmaCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmcCommand;
@@ -42,6 +43,8 @@ public class CorePlugin extends JavaPlugin {
         new AllChatCommand();
         // new LangCommand();
         new ReportCommand();
+        new PlayCommand();
+        new ChatChannelCommand();
 
         new RankCommand();
         new ItemCommand();
@@ -49,7 +52,6 @@ public class CorePlugin extends JavaPlugin {
         new StaffNotifyCommand();
         new StaffHubCommand();
         new BuildModeCommand();
-        new ChatChannelCommand();
         new TpHereCommand();
         new TpAllCommand();
         new CoreVersionCommand();
@@ -65,6 +67,7 @@ public class CorePlugin extends JavaPlugin {
         new RemoveBadNameCommand();
         new MuteCommand();
         new UnMuteCommand();
+        new TempBanCommand();
 
         new SetNetworkLevel();
         new CheckNetworkLevel();
