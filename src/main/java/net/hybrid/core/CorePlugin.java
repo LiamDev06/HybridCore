@@ -1,9 +1,6 @@
 package net.hybrid.core;
 
-import net.hybrid.core.commands.AllChatCommand;
-import net.hybrid.core.commands.ChatChannelCommand;
-import net.hybrid.core.commands.LangCommand;
-import net.hybrid.core.commands.PlayCommand;
+import net.hybrid.core.commands.*;
 import net.hybrid.core.commands.admin.*;
 import net.hybrid.core.commands.admin.gmcommands.GmaCommand;
 import net.hybrid.core.commands.admin.gmcommands.GmcCommand;
@@ -19,6 +16,8 @@ import net.hybrid.core.moderation.commands.*;
 import net.hybrid.core.rank.RankCommand;
 import net.hybrid.core.utility.BadWordsFilter;
 import net.hybrid.core.utility.ServerVersion;
+import net.hybrid.core.utility.skinapi.SkinsAPI;
+import net.hybrid.core.utility.skinapi.skins.SkinsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -57,7 +56,13 @@ public class CorePlugin extends JavaPlugin {
         new CoreVersionCommand();
         new NMSVersionCommand();
         new VanishCommand();
+        new NickCommand();
+        new UnnickCommand();
         new KaboomCommand();
+        new HealCommand();
+        new FeedCommand();
+        new HiddenNickCommand();
+        new LoopCommand();
 
         new BanCommand();
         new UnbanCommand();
@@ -93,6 +98,21 @@ public class CorePlugin extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
+        SkinsAPI.getInstance().setPlugin(this);
+        SkinsAPI.getInstance().enable();
+        try {
+            SkinsManager manager = SkinsAPI.getInstance().getSkinsManager();
+
+            File[] files = new File(getDataFolder() + "/nickskins").listFiles();
+            for (File file : files) {
+                manager.loadSkin(file);
+            }
+
+            getLogger().info("Skins to the core for the nick system loaded WITHOUT ISSUES! Works!");
+        } catch (Exception exception) {
+            getLogger().info("Loading skins to the core for the nick system FAILED!");
+        }
+
         File file = new File(getDataFolder(), "bad-words.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         if (!file.exists() || !config.getStringList("words").equals(BadWordsFilter.getBadWords())) {
@@ -122,6 +142,8 @@ public class CorePlugin extends JavaPlugin {
     public void onDisable(){
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
+
+        SkinsAPI.getInstance().disable();
 
         INSTANCE = null;
         getLogger().info("Hybrid Core system has SUCCESSFULLY been disabled.");

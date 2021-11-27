@@ -5,9 +5,11 @@ import net.hybrid.core.CorePlugin;
 import net.hybrid.core.managers.NetworkLevelingManager;
 import net.hybrid.core.managers.tabmanagers.NetworkTabManager;
 import net.hybrid.core.rank.RankManager;
+import net.hybrid.core.utility.DisguiseManager;
 import net.hybrid.core.utility.HybridPlayer;
-import net.hybrid.core.utility.MetadataManager;
 import net.hybrid.core.utility.enums.*;
+import net.hybrid.core.utility.nick.Nick;
+import net.hybrid.core.utility.nick.NickUtils;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,6 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.io.File;
 
 public class MongoListener implements Listener {
 
@@ -71,7 +75,7 @@ public class MongoListener implements Listener {
             document.append("nicked", false);
             document.append("nickNickname", "");
             document.append("nickRank", "");
-            document.append("nickSkinTexture", "");
+            document.append("nickSkinFileName", "");
 
             document.append("friendRequestPrivacy", FriendsPrivacy.ALL.name());
             document.append("gangInvitePrivacy", GangPrivacy.ALL.name());
@@ -95,6 +99,10 @@ public class MongoListener implements Listener {
             document.replace("playerName", player.getName());
         }
 
+        if (document.containsKey("nickSkinTexture") && !document.containsKey("nickSkinFileName")) {
+            document.append("nickSkinFileName", "");
+        }
+
         mongo.saveDocument("serverData", playerListDocument, "serverDataType", "playerDataList");
         mongo.saveDocument("playerData", document, player.getUniqueId());
 
@@ -115,6 +123,41 @@ public class MongoListener implements Listener {
         } else {
             NetworkLevelingManager.expCache.put(player.getUniqueId(), hybridPlayer.getNetworkLevelingManager().getExp());
         }
+
+        if (document.getBoolean("vanished")) {
+            if (!DisguiseManager.vanishedPlayersCache.contains(player.getUniqueId())) {
+                DisguiseManager.vanishedPlayersCache.add(player.getUniqueId());
+            }
+        }
+
+        if (document.getBoolean("nicked")) {
+            Nick nick = new Nick(
+                    player.getUniqueId(),
+                    document.getString("nickNickname"),
+                    NickRank.valueOf(document.getString("nickRank").toUpperCase()),
+                    NickSkinType.RANDOM,
+                    new File(NickUtils.skinsPath(), document.getString("nickSkinFileName"))
+            );
+
+            if (document.getString("nickSkinFileName").equalsIgnoreCase("steve.png")) {
+                nick.setNickSkinType(NickSkinType.STEVE);
+            }
+
+            if (document.getString("nickSkinFileName").equalsIgnoreCase("self")) {
+                nick.setNickSkinType(NickSkinType.OWN);
+            }
+
+
+            if (DisguiseManager.nicksCache.containsKey(player.getUniqueId())) {
+                DisguiseManager.nicksCache.replace(player.getUniqueId(), nick);
+            } else {
+                DisguiseManager.nicksCache.put(player.getUniqueId(), nick);
+            }
+
+            if (!DisguiseManager.nickedPlayersCache.contains(player.getUniqueId())) {
+                DisguiseManager.nickedPlayersCache.add(player.getUniqueId());
+            }
+        }
     }
 
     @EventHandler
@@ -124,6 +167,9 @@ public class MongoListener implements Listener {
         RankManager.getRankCache().remove(player.getUniqueId());
         NetworkLevelingManager.levelCache.remove(player.getUniqueId());
         NetworkLevelingManager.expCache.remove(player.getUniqueId());
+        DisguiseManager.vanishedPlayersCache.remove(player.getUniqueId());
+        DisguiseManager.nicksCache.remove(player.getUniqueId());
+        DisguiseManager.nickedPlayersCache.remove(player.getUniqueId());
 
         if (NetworkTabManager.scoreboards.get(player.getUniqueId()).getObjective("sidebar") != null) {
             NetworkTabManager.scoreboards.get(player.getUniqueId()).getObjective("sidebar").unregister();

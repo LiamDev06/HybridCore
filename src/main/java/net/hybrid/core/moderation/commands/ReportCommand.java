@@ -34,7 +34,6 @@ public class ReportCommand extends PlayerCommand {
         if (args.length > 1) {
             StringBuilder builder = new StringBuilder();
             int count = 1;
-            // report liamhbest bad person he cheats so hard pls ban bannnnn
 
             for (String s : args) {
                 if (count > 2) {

@@ -50,19 +50,15 @@ public class ScoreHelper {
 
     public void setTitle(String title) {
         title = ChatColor.translateAlternateColorCodes('&', title);
-
-        if (sidebar != null) {
-            sidebar.setDisplayName(title.length()>32 ? title.substring(0, 32) : title);
-        }
+        sidebar.setDisplayName(title.length()>32 ? title.substring(0, 32) : title);
     }
 
     public void setSlot(int slot, String text) {
         Team team = scoreboard.getTeam("SLOT_" + slot);
         String entry = genEntry(slot);
-        if(!scoreboard.getEntries().contains(entry)) {
-            if (sidebar != null) {
-                sidebar.getScore(entry).setScore(slot);
-            }
+
+        if (!scoreboard.getEntries().contains(entry)) {
+            sidebar.getScore(entry).setScore(slot);
         }
 
         text = ChatColor.translateAlternateColorCodes('&', text);

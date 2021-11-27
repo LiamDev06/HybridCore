@@ -1,7 +1,6 @@
 package net.hybrid.core.utility;
 
 import com.google.common.collect.Iterables;
-import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.hybrid.core.CorePlugin;

@@ -2,13 +2,12 @@ package net.hybrid.core.commands;
 
 import net.hybrid.core.data.Language;
 import net.hybrid.core.managers.NetworkChatManager;
-import net.hybrid.core.utility.BadWordsFilter;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.enums.ChatChannel;
+import net.hybrid.core.utility.enums.NickRank;
 import net.hybrid.core.utility.enums.PlayerRank;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 public class AllChatCommand extends PlayerCommand {
@@ -49,10 +48,13 @@ public class AllChatCommand extends PlayerCommand {
 
         String sendMessage;
 
-        final String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
+        String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
+        if (hybridPlayer.getDisguiseManager().isNicked()) {
+            start = hybridPlayer.getDisguiseManager().getNick().getNickRank().getPrefixSpace() + hybridPlayer.getDisguiseManager().getNick().getNickname();
+        }
 
-        if (hybridPlayer.getRankManager().getRank() == PlayerRank.MEMBER) {
-            if (NetworkChatManager.canSendMessageAllFilters(player, message.toString().trim())) {
+        if (hybridPlayer.getRankManager().getRank() == PlayerRank.MEMBER || (hybridPlayer.getDisguiseManager().getNick().getNickRank() == NickRank.MEMBER && hybridPlayer.getDisguiseManager().isNicked())) {
+            if (NetworkChatManager.canSendMessageAllFilters(player, hybridPlayer, message.toString().trim())) {
                 sendMessage = start + "§f: " + message;
 
                 NetworkChatManager.lastMessage.remove(player.getUniqueId());
@@ -64,12 +66,12 @@ public class AllChatCommand extends PlayerCommand {
             }
         }
 
-        else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN)) {
+        else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN) && !hybridPlayer.getDisguiseManager().isNicked()) {
             sendMessage = start + "§f ➤ " + CC.translate(message.toString().trim());
         }
 
         else {
-            if (NetworkChatManager.canSendMessageBlackListOnly(player, message.toString().trim())) {
+            if (NetworkChatManager.canSendMessageBlackListOnly(player, hybridPlayer, message.toString().trim())) {
                 sendMessage = start + "§f ➤ " + message;
             } else {
                 return;

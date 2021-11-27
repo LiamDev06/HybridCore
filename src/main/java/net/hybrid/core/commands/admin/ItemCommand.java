@@ -7,7 +7,6 @@ import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.SoundManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

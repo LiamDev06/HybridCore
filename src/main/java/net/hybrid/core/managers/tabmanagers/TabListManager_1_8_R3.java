@@ -3,8 +3,6 @@ package net.hybrid.core.managers.tabmanagers;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.utility.TabInterface;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.ItemStack;
-import net.minecraft.server.v1_8_R3.PacketDataSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerListHeaderFooter;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -48,7 +46,7 @@ public class TabListManager_1_8_R3 implements TabInterface {
                 addHeader("&e&lHybrid Server\n&eYou are playing on &a&lhybridplays.com\n ");
                 addHeader("&9&lHybrid Server\n&eYou are playing on &a&lhybridplays.com\n ");
 
-                addFooter("\n &b&lDiscord: &fdsc.gg/hybridserver\n &b&lTwitter: &f@PlayHybridMC");
+                addFooter("\n &b&lDiscord: &fhybridplays.com/discord\n &b&lTwitter: &f@PlayHybridMC");
 
                 try {
                     Field a = packet.getClass().getDeclaredField("a");

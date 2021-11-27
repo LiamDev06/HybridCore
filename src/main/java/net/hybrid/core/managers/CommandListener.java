@@ -31,8 +31,8 @@ public class CommandListener implements Listener {
             }
         }
 
-        if (event.getMessage().toLowerCase().startsWith("/version")
-                || event.getMessage().toLowerCase().startsWith("/ver")) {
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/version")
+                || event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/ver")) {
             if (!hybridPlayer.getRankManager().isAdmin()) {
                 hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
                 event.setCancelled(true);
@@ -46,16 +46,14 @@ public class CommandListener implements Listener {
             }
         }
 
-        if (event.getMessage().toLowerCase().startsWith("/help")) {
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/help")) {
             if (!hybridPlayer.getRankManager().isAdmin()) {
                 hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
                 event.setCancelled(true);
             }
         }
 
-        if (event.getMessage().toLowerCase().startsWith("/tp")
-                && !event.getMessage().toLowerCase().startsWith("/tphere")
-                && !event.getMessage().toLowerCase().startsWith("/tpall")) {
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/tp")) {
             event.setCancelled(true);
             if (!hybridPlayer.getRankManager().isAdmin()) {
                 hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
@@ -100,7 +98,7 @@ public class CommandListener implements Listener {
             return;
         }
 
-        if (event.getMessage().toLowerCase().startsWith("/clear")) {
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/clear")) {
             event.setCancelled(true);
             if (!hybridPlayer.getRankManager().isAdmin()) {
                 hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
@@ -163,6 +161,20 @@ public class CommandListener implements Listener {
         }
 
         if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/me")) {
+            if (!hybridPlayer.getRankManager().isAdmin()) {
+                hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+                event.setCancelled(true);
+            }
+        }
+
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/nte")) {
+            if (!hybridPlayer.getRankManager().isAdmin()) {
+                hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
+                event.setCancelled(true);
+            }
+        }
+
+        if (event.getMessage().toLowerCase().split(" ")[0].equalsIgnoreCase("/papi")) {
             if (!hybridPlayer.getRankManager().isAdmin()) {
                 hybridPlayer.sendMessage(Language.get(player.getUniqueId(), "requires_admin"));
                 event.setCancelled(true);

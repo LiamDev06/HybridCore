@@ -4,9 +4,9 @@ import net.hybrid.core.utility.BadWordsFilter;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.enums.ChatChannel;
+import net.hybrid.core.utility.enums.NickRank;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,13 +45,16 @@ public class NetworkChatManager implements Listener {
             return;
         }
 
-        final String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
+        String start = hybridPlayer.getRankManager().getRank().getPrefixSpace() + hybridPlayer.getColoredName();
+        if (hybridPlayer.getDisguiseManager().isNicked()) {
+            start = hybridPlayer.getDisguiseManager().getNick().getNickRank().getPrefixSpace() + hybridPlayer.getDisguiseManager().getNick().getNickname();
+        }
 
         if (hybridPlayer.getMetadataManager().getChatChannel() == ChatChannel.ALL) {
             event.setCancelled(true);
 
-            if (hybridPlayer.getRankManager().getRank() == PlayerRank.MEMBER) {
-                if (canSendMessageAllFilters(player, message)) {
+            if (hybridPlayer.getRankManager().getRank() == PlayerRank.MEMBER || (hybridPlayer.getDisguiseManager().getNick().getNickRank() == NickRank.MEMBER && hybridPlayer.getDisguiseManager().isNicked())) {
+                if (canSendMessageAllFilters(player, hybridPlayer, message)) {
                     sendMessage = start + "§f: " + message;
 
                     lastMessage.remove(player.getUniqueId());
@@ -63,12 +66,12 @@ public class NetworkChatManager implements Listener {
                 }
             }
 
-            else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN)) {
+            else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN) && !hybridPlayer.getDisguiseManager().isNicked()) {
                 sendMessage = start + "§f ➤ " + CC.translate(message);
             }
 
             else {
-                if (canSendMessageBlackListOnly(player, message)) {
+                if (canSendMessageBlackListOnly(player, hybridPlayer, message)) {
                     sendMessage = start + "§f ➤ " + message;
                 } else {
                     return;
@@ -81,7 +84,7 @@ public class NetworkChatManager implements Listener {
         }
     }
 
-    public static boolean canSendMessageAllFilters(Player player, String message) {
+    public static boolean canSendMessageAllFilters(Player player, HybridPlayer hybridPlayer, String message) {
         boolean containsBadWord = false;
         for (String word : BadWordsFilter.getBadWords()) {
             if (message.toLowerCase().equalsIgnoreCase(word)) {
@@ -100,21 +103,21 @@ public class NetworkChatManager implements Listener {
             chatCooldownBlock = true;
         }
 
-        if (containsBadWord) {
+        if (containsBadWord && !hybridPlayer.getRankManager().isAdmin()) {
             player.sendMessage("§7§m-------------------------------------------");
             player.sendMessage("§c§lMESSAGE BLOCKED! §cYour message contains blacklisted words!");
             player.sendMessage("§7§m-------------------------------------------");
             return false;
         }
 
-        if (lastMessageBlock) {
+        if (lastMessageBlock && !hybridPlayer.getDisguiseManager().isNicked()) {
             player.sendMessage("§7§m-------------------------------------------");
             player.sendMessage("§c§lSPAM! §cPlease do not say the same thing twice!");
             player.sendMessage("§7§m-------------------------------------------");
             return false;
         }
 
-        if (chatCooldownBlock) {
+        if (chatCooldownBlock && !hybridPlayer.getDisguiseManager().isNicked()) {
             player.sendMessage("§7§m-------------------------------------------");
             player.sendMessage("§c§lCOOLDOWN! §cYou can only chat once every 2 seconds!");
             player.sendMessage("§7§m-------------------------------------------");
@@ -124,7 +127,7 @@ public class NetworkChatManager implements Listener {
         return true;
     }
 
-    public static boolean canSendMessageBlackListOnly(Player player, String message) {
+    public static boolean canSendMessageBlackListOnly(Player player, HybridPlayer hybridPlayer, String message) {
         boolean containsBadWord = false;
         for (String word : BadWordsFilter.getBadWords()) {
             if (message.toLowerCase().contains(word) && !word.toLowerCase().equalsIgnoreCase("bypass")) {
@@ -133,7 +136,7 @@ public class NetworkChatManager implements Listener {
             }
         }
 
-        if (containsBadWord) {
+        if (containsBadWord && !hybridPlayer.getRankManager().isAdmin()) {
             player.sendMessage("§7§m-------------------------------------------");
             player.sendMessage("§c§lMESSAGE BLOCKED! §cYour message contains blacklisted words!");
             player.sendMessage("§7§m-------------------------------------------");

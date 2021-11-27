@@ -7,7 +7,6 @@ import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.bookgui.BookUtil;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bson.Document;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

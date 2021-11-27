@@ -3,9 +3,7 @@ package net.hybrid.core.data;
 import net.hybrid.core.CorePlugin;
 import net.hybrid.core.utility.CC;
 import net.hybrid.core.utility.enums.LanguageType;
-import org.apache.logging.log4j.core.Core;
 import org.bson.Document;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

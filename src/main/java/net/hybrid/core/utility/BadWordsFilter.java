@@ -146,6 +146,8 @@ public class BadWordsFilter {
         list.add("neger");
         list.add("negger");
         list.add("neeggeer");
+        list.add("hitler");
+        list.add("putin");
 
         return list;
     }

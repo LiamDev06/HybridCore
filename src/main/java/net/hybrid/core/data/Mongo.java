@@ -4,12 +4,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.InsertOneOptions;
 import com.mongodb.client.model.UpdateOptions;
 import net.hybrid.core.CorePlugin;
 import org.bson.Document;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class Mongo {

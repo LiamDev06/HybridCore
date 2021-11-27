@@ -5,7 +5,6 @@ import net.hybrid.core.data.Language;
 import net.hybrid.core.utility.HybridPlayer;
 import net.hybrid.core.utility.PlayerCommand;
 import net.hybrid.core.utility.SoundManager;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class CoreVersionCommand extends PlayerCommand {

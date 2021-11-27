@@ -6,7 +6,6 @@ import net.hybrid.core.utility.enums.LanguageType;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class MetadataManager {
