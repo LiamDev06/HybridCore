@@ -10,6 +10,8 @@ import net.hybrid.core.utility.enums.NickRank;
 import net.hybrid.core.utility.enums.PlayerRank;
 import org.bukkit.entity.Player;
 
+import static net.hybrid.core.managers.NetworkChatManager.replaceWithEmote;
+
 public class AllChatCommand extends PlayerCommand {
 
     public AllChatCommand() {
@@ -68,11 +70,13 @@ public class AllChatCommand extends PlayerCommand {
 
         else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN) && !hybridPlayer.getDisguiseManager().isNicked()) {
             sendMessage = start + "§f ➤ " + CC.translate(message.toString().trim());
+            sendMessage = replaceWithEmote(sendMessage);
         }
 
         else {
             if (NetworkChatManager.canSendMessageBlackListOnly(player, hybridPlayer, message.toString().trim())) {
                 sendMessage = start + "§f ➤ " + message;
+                sendMessage = replaceWithEmote(sendMessage);
             } else {
                 return;
             }

@@ -54,7 +54,7 @@ public class KaboomCommand extends PlayerCommand {
         }
 
         Player target = Bukkit.getPlayer(args[0]);
-        if (target.isOnline()) {
+        if (target != null) {
             kaboomNoFallDamage.add(target.getUniqueId());
 
             target.setVelocity(new Vector(0, 100, 0));

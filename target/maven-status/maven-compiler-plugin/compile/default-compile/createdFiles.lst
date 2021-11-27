@@ -26,6 +26,7 @@ net\hybrid\core\managers\GameManager.class
 net\hybrid\core\commands\admin\LoopCommand.class
 net\hybrid\core\commands\admin\NMSVersionCommand.class
 net\hybrid\core\data\MongoListener.class
+net\hybrid\core\commands\EmoteCommand.class
 net\hybrid\core\managers\PurchaseManager$1.class
 net\hybrid\core\utility\enums\NickSkinType.class
 net\hybrid\core\utility\HybridPlayer.class
@@ -125,6 +126,7 @@ net\hybrid\core\commands\PlayCommand.class
 net\hybrid\core\commands\VanishCommand.class
 net\hybrid\core\moderation\commands\KickCommand.class
 net\hybrid\core\utility\ServerVersion.class
+net\hybrid\core\moderation\commands\ClearChatCommand.class
 net\hybrid\core\utility\ItemBuilder.class
 net\hybrid\core\managers\NetworkChatManager.class
 net\hybrid\core\managers\ListenerManager.class

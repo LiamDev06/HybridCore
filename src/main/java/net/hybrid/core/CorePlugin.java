@@ -44,6 +44,7 @@ public class CorePlugin extends JavaPlugin {
         new ReportCommand();
         new PlayCommand();
         new ChatChannelCommand();
+        new EmoteCommand();
 
         new RankCommand();
         new ItemCommand();
@@ -73,6 +74,7 @@ public class CorePlugin extends JavaPlugin {
         new MuteCommand();
         new UnMuteCommand();
         new TempBanCommand();
+        new ClearChatCommand();
 
         new SetNetworkLevel();
         new CheckNetworkLevel();

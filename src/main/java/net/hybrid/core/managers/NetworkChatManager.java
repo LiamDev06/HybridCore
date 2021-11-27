@@ -68,11 +68,13 @@ public class NetworkChatManager implements Listener {
 
             else if (hybridPlayer.getRankManager().hasRank(PlayerRank.ADMIN) && !hybridPlayer.getDisguiseManager().isNicked()) {
                 sendMessage = start + "§f ➤ " + CC.translate(message);
+                sendMessage = replaceWithEmote(sendMessage);
             }
 
             else {
                 if (canSendMessageBlackListOnly(player, hybridPlayer, message)) {
                     sendMessage = start + "§f ➤ " + message;
+                    sendMessage = replaceWithEmote(sendMessage);
                 } else {
                     return;
                 }
@@ -144,6 +146,23 @@ public class NetworkChatManager implements Listener {
         }
 
         return true;
+    }
+
+    public static String replaceWithEmote(String input) {
+
+        input = input.replace(":cool:", CC.translate("&a&lCool&r"));
+        input = input.replace(":shrug:", CC.translate("&d¯\\_(ツ)_/¯&r"));
+        input = input.replace(":wow:", CC.translate("&b&lW&4&lO&b&lW&r"));
+        input = input.replace("o/", CC.translate("&5(o_o)/&r"));
+        input = input.replace(":hybrid:", CC.translate("&2&lHYBRID&r"));
+        input = input.replace(":L:", CC.translate("&c&lL&r"));
+        input = input.replace(":sad:", CC.translate("&e◕︵◕&r"));
+        input = input.replace(":happy:", CC.translate("&6&l◕◡◕&r"));
+        input = input.replace(":embarrassed:", CC.translate("&b⊙﹏⊙&r"));
+        input = input.replace(":eyes:", CC.translate("&aʘ.ʘ&r"));
+        input = input.replace(":hehe:", CC.translate("&0hehe&r"));
+
+        return input;
     }
 
 }
