@@ -13,11 +13,12 @@ import java.util.UUID;
 public class Mongo {
 
     private final MongoDatabase coreDatabase;
+    private final MongoClient mongoClient;
 
     public Mongo(CorePlugin plugin) {
         String connectionString = "mongodb+srv://HybridNetwork:jdfsdsf879hjgfdg5@cluster0.0bfk6.mongodb.net/test?retryWrites=true&w=majority";
-        MongoClient mongoClient = new MongoClient(new MongoClientURI(connectionString));
 
+        this.mongoClient = new MongoClient(new MongoClientURI(connectionString));
         this.coreDatabase = mongoClient.getDatabase("coredata");
 
         plugin.getLogger().info("The core database has been CONNECTED.");
@@ -64,6 +65,10 @@ public class Mongo {
 
     public MongoDatabase getCoreDatabase() {
         return coreDatabase;
+    }
+
+    public MongoClient getMongoClient() {
+        return mongoClient;
     }
 }
 

@@ -19,7 +19,7 @@ public class PlayerReportManager {
         document.append("punishmentIssuedId", "");
         document.append("issuerUUID", issuer.toString());
         document.append("againstUUID", against.toString());
-        document.append("reason", reason.trim());
+        document.append("reason", reason);
         document.append("created", created);
 
         mongo.saveDocument("playerReports", document);

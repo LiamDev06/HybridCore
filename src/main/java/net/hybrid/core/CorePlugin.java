@@ -146,6 +146,7 @@ public class CorePlugin extends JavaPlugin {
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
 
         SkinsAPI.getInstance().disable();
+        mongo.getMongoClient().close();
 
         INSTANCE = null;
         getLogger().info("Hybrid Core system has SUCCESSFULLY been disabled.");
