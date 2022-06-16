@@ -1,2 +1,4 @@
 # CoreSoftware
-Hybrid core software including essential core features
+
+A network core plugin I worked on for Hybrid when I was Lead Developer there.
+All credentials used in code (yes I know very not good) are outdated and not working anymore.
